@@ -1,0 +1,63 @@
+
+ 
+			
+instrument mode:
+	fix scene buttons
+	quickscale
+	
+	functions :
+		quantize one note ?
+		delete one note
+		mute note 
+		duplicate clip
+		double clip
+	drum mode : 
+		scrolling not working
+		mute, solo
+
+		
+session :
+	fix duplicate clip not working
+
+step seq2
+	matrix not updating
+	buttons not updating
+	
+step seq1
+	fix bug with ghost scale component
+	fix bug with init ghost (force)
+	fix bug with create clip
+	use velocity of the pressed pad
+	note selector 
+		using the instrument mode scale colors
+		mute
+	drumrack mode
+		use drum component in drum mode. => use separated drum component, so that it works with lock mode.
+		
+	
+scene buttons :
+	#step1		#step2		#instru		#device			
+	scale		scale		scale		on/off		
+	up			oct			up			up
+	down		pitch		down		down
+	quant		quant		??			precision
+	vel			vel			solo		lock1
+	mute		len			mute		lock2
+	mode		rand		stop		lock3
+	lock		lock		play		lock4
+		
+device controller:
+
+
+session :
+	record quantize ? 
+	launchquantize
+	select quantise value with scenes ??
+
+
+DONE
+	disable implicit arm while leaving
+	feedback channels ?
+	map directly into instrument component scale mode
+	scale drum rack => select drum rack mode on exit.
+	
