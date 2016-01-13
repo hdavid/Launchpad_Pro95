@@ -149,9 +149,9 @@ class DeviceComponent(LiveDeviceComponent):
 			# update bank buttons colors
 			if self._device != None:
 				if self._prev_bank_button != None:
-					self._prev_bank_button.set_on_off_values("Mode.Device.On", "Mode.Device.Off")
+					self._prev_bank_button.set_on_off_values("Device.Bank.On", "Device.Bank.Off")
 				if self._next_bank_button != None:
-					self._next_bank_button.set_on_off_values("Mode.Device.On", "Mode.Device.Off")
+					self._next_bank_button.set_on_off_values("Device.Bank.On", "Device.Bank.Off")
 			else:
 				if self._prev_bank_button != None:
 					self._prev_bank_button.set_on_off_values("DefaultButton.Disabled","DefaultButton.Disabled")

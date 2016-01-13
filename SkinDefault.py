@@ -1,6 +1,7 @@
 #Embedded file name: /Users/versonator/Jenkins/live/output/mac_64_static/Release/midi-remote-scripts/Launchpad_Pro/SkinDefault.py
 from _Framework.Skin import Skin
 from .Colors import Rgb
+from _Framework.ButtonElement import Color
 
 class Colors:
 
@@ -62,6 +63,9 @@ class Colors:
 		HAvail = Rgb.RED_HALF
 
 	class Device:
+		class Bank:
+			On = Rgb.BLUE
+			Off = Rgb.BLUE_HALF
 		class Lock:
 			Empty = Rgb.PURPLE
 			Set = Rgb.RED_HALF
@@ -70,8 +74,8 @@ class Colors:
 			On = Rgb.PURPLE
 			Off = Rgb.PURPLE_HALF
 		class PrecisionSlider:
-			On = Rgb.PURPLE
-			Off = Rgb.PURPLE_HALF
+			On = Rgb.DARK_BLUE
+			Off = Rgb.DARK_BLUE_HALF
 		class Enum:
 			On = Rgb.ORANGE
 			Off = Rgb.ORANGE_HALF
@@ -106,7 +110,7 @@ class Colors:
 			SelectedPlaying = Rgb.PURPLE
 			Playing = Rgb.PURPLE_HALF
 			Selected = Rgb.AMBER
-			InLoop = Rgb.GREEN
+			InLoop = Rgb.BLUE_HALF
 		class Quantization:
 			One=Rgb.BLACK
 			Two=Rgb.GREEN_HALF
@@ -122,39 +126,37 @@ class Colors:
 			class VelocityShifted:
 				On = Rgb.ORANGE
 				Off = Rgb.ORANGE_HALF
-			Velocity1 = Rgb.BLACK
-			Velocity2 = Rgb.GREEN_HALF
-			Velocity3 = Rgb.GREEN
-			Muted = Rgb.AMBER
+			Velocity0 = Color(0)
+			Velocity1 = Color(27)
+			Velocity2 = Color(26)
+			Velocity3 = Color(25)
+			Velocity4 = Color(24)
+			Muted = Rgb.DARK_GREY
 			Playing = Rgb.RED
 			Metronome = Rgb.BLUE
+			NoteMarker = Rgb.AMBER
+			PageMarker = Rgb.YELLOW
 				
 	class StepSequencer2:
 		class Pitch:
-			On = Rgb.GREEN
+			On = Rgb.DARK_BLUE
+			Dim = Rgb.DARK_BLUE_HALF
 			Off = Rgb.BLACK
-			OnDim = Rgb.GREEN_HALF
-			OffDim = Rgb.BLACK
 		class Octave:
-			On = Rgb.RED
+			On = Rgb.PURPLE
+			Dim = Rgb.PURPLE_HALF
 			Off = Rgb.BLACK
-			OnDim = Rgb.RED_HALF
-			OffDim = Rgb.BLACK
 		class Velocity:
-			On = Rgb.AMBER
+			On = Rgb.LIGHT_BLUE
+			Dim = Rgb.LIGHT_BLUE_HALF
 			Off = Rgb.BLACK
-			OnDim = Rgb.AMBER_HALF
-			OffDim = Rgb.BLACK
 		class Length:
-			On = Rgb.AMBER
+			On = Rgb.MINT
+			Dim = Rgb.MINT_HALF
 			Off = Rgb.BLACK
-			OnDim = Rgb.AMBER_HALF
-			OffDim = Rgb.BLACK
-			MetronomeInPage = Rgb.RED
-			MetronomeInOtherPage = Rgb.RED_HALF
 		class Random:
-			On = Rgb.GREEN
-			Off = Rgb.GREEN_HALF
+			On = Rgb.RED
+			Off = Rgb.RED
 		class NoteEditor:
 			MetronomeInPage = Rgb.BLUE
 			MetronomeInOtherPage = Rgb.BLUE_HALF

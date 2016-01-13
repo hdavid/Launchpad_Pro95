@@ -162,6 +162,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	def __init__(self, c_instance, *a, **k):
 		product_id_bytes = consts.MANUFACTURER_ID + consts.DEVICE_CODE
 		super(Launchpad_Pro95, self).__init__(c_instance=c_instance, product_id_bytes=product_id_bytes, *a, **k)
+		
+		self.set_enabled(False)
 		self._challenge = Live.Application.get_random_int(0, 400000000) & 2139062143
 		with self.component_guard():
 			self._skin = make_default_skin()
@@ -184,12 +186,13 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 				self._create_modes()
 				self._create_m4l_interface()
 			self._on_session_record_changed.subject = self.song()
-		self.set_highlighting_session_component(self._session)
+		# do this in handshake successful. self.set_highlighting_session_component(self._session)
 		self.set_device_component(self._device)
 		self._device_selection_follows_track_selection = True
 		self._on_session_record_changed()
 
 	def disconnect(self):
+		self.set_highlighting_session_component(None)
 		self._send_midi(consts.TURN_OFF_LEDS)
 		#self._send_midi(consts.QUIT_MESSAGE)
 		super(Launchpad_Pro95, self).disconnect()
@@ -241,7 +244,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 				scene_bank_down_button=self._midimap['Arrow_Down_Button']
 			)
 		)
-		self._session.set_enabled(True)
+		#self._session.set_enabled(True) # enable it on handshake successful
 		self._session.set_rgb_mode(CLIP_COLOR_TABLE, RGB_COLOR_TABLE)
 		SpecialClipSlotComponent.quantization_component = self._actions_component
 		for scene_index in xrange(NUM_SCENES):
@@ -961,7 +964,6 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._last_sent_mode_byte = mode
 
 	def _send_identity_request(self):
-		self.log_message("sending id request :" + str(consts.SYSEX_IDENTITY_REQUEST))
 		self._send_midi(consts.SYSEX_IDENTITY_REQUEST)
 
 	def on_identified(self):
@@ -977,6 +979,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _on_handshake_successful(self):
 		self._do_send_midi(consts.LIVE_MODE_SWITCH_REQUEST)
+		self.set_highlighting_session_component(self._session)
 		
 		with self.component_guard():
 			self._modes.set_enabled(True)
@@ -1009,7 +1012,14 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		#	self.log_message(str(midi_bytes[5]))
 		#	pass
 		else:
-			#self.log_message("got sysex : "+str(midi_bytes))
-			super(Launchpad_Pro95, self).handle_sysex(midi_bytes)
+			if midi_bytes[0]==240 and midi_bytes[1]==0 and midi_bytes[2]==32 and midi_bytes[3]==41:
+				if midi_bytes[4]==0 and len(midi_bytes)==6:
+					self.log_message("got sysex type 0")
+				elif midi_bytes[4]==2 and len(midi_bytes)==9:
+					self.log_message("got sysex type 2. data: "+str(midi_bytes[5])+"-"+str(midi_bytes[6])+"-"+str(midi_bytes[7]))
+				else:
+					super(Launchpad_Pro95, self).handle_sysex(midi_bytes)
+			else:
+				super(Launchpad_Pro95, self).handle_sysex(midi_bytes)
 			
 			

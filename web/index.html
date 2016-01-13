@@ -13,7 +13,7 @@
 		table.launchpad{border:2px solid grey; background-color:#444; padding:25px; border-collapse:separate; border-spacing:7px 7px; border-radius:10px; page-break-inside:avoid }
 		
 		table.launchpad tr td.pad, table.launchpad tr td.round {
-			font-size: 11pt; 
+			font-size: 10pt; 
 			color:#CCC;background-color:#888;background:radial-gradient(ellipse at center, #888 12%,#777 99%);
 			vertical-align:top; vertical-align:middle; text-align:center;
 			border:1px solid #333; 
@@ -68,8 +68,8 @@
 	<p id="toc"></p>
 	<p>
 		These scripts are modified version of Ableton Live 9.5 scripts for Novation Launchpad Pro. 
-		Providing the same functionality but add support for editing the midi clips using a step sequencer (soon).
-		It also improves the Note Mode and the Device Mode.
+		Providing the same functionality but adding support for editing the midi clips using a step sequencer (soon).
+		Also improving the Note Mode and the Device Mode.
 		It does not require any external tool like Max for Live (M4L) in order to work. 
 		This script is just a plain Live Control Surface Python Script.
 	</p>
@@ -78,26 +78,22 @@
 		Comment, feedback and updates : please check this thread on Ableton forum <a href="http://forum.ableton.com/viewtopic.php?f=1&amp;t=168495">http://forum.ableton.com/viewtopic.php?f=1&amp;t=168495</a>
 	</p>
 	<p>
-		Donation ? <a href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_send-money&amp;nav=1&amp;email=hdavid@mail.com">paypal</a>
+		Willing to make a donation ? 
+		<a href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_send-money&amp;nav=1&amp;email=hdavid@mail.com">paypal</a>
 		to my account <a href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_send-money&amp;nav=1&amp;email=hdavid@mail.com">hdavid@mail.com</a>.
 	</p>
 
 	<section>
 	<h2>Installation</h2>
 	<p>
-		keep in mind this is a work in progress and is still full of bugs !
-		helping hands are welcome of cours.
-	</p>
-	<p>
 		First, download the installation archive :<br/>
-		- live 9.5+ : <strong><a href="Launchpad_Pro95.zip">Launchpad_Pro95.zip</a></strong><br/>
-		Unzip the zip file and copy the folder Launchpad95 into the Ableton Live's "MIDI Remote Scripts" folder. (where is that folder ? look at <a href="#faq-3">faq 3</a>.
+		- live 9.5+ : <strong><a href="Launchpad95_Pro.zip">Launchpad95_Pro.zip</a></strong><br/>
+		Unzip the zip file and copy the folder Launchpad_Pro95 into the Ableton Live's "MIDI Remote Scripts" folder. (where is that folder ? look at <a href="#faq-3">faq 3</a>.
 	</p>
 	<p>
 		After the folder has been copied, plug-in your Launchpad in the computer 
 		and start Ableton Live. Open up the preferences panel and go to "MIDI Sync" panel. 
-		Select 'Launchpad95 Pro' as your control surface and select the launchpad Midi Port midi ports like so : <br/>
-		<img src="setup.png"/>
+		Select 'Launchpad95 Pro' as your control surface and select the launchpad PRO Livwe Midi Port midi ports.
 	</p>
 	</section>
 	
@@ -122,8 +118,8 @@
 		The top up/down navigation buttons allow to navigate scenes, while the left/right button allow to navigate tracks.
 	</p>
 	<p>
-		The matrix of buttons act as a midi keyboard proposing a drum rack layout, and a melodic mode.
-		Melodic mode enable you to select root note, type of mode (major, minor etc), and the octave you play in.
+		The matrix of buttons act as a midi keyboard proposing a drum rack layout, and melodic layouts.
+		Melodic layouts enable you to select root note, type of mode (major, minor etc), and the octave you play in.
 	</p>
 
 	<table class="launchpad">
@@ -141,97 +137,97 @@
 		</tr>
 		<tr>
 			<td class="round green">Shift</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
+			<td class="pad blue">&nbsp;</td>
+			<td class="pad blue">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
 			<td class="round blue"><div class="note">enter scale edition mode</div>Scale</td>
 		</tr>
 		<tr>
 			<td class="round green">Click</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
 			<td class="round blue">Octave+</td>
 		</tr>
 		<tr>
 			<td class="round green">Undo</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
 			<td class="round blue">Octave-</td>
 		</tr>
 		<tr>
 			<td class="round green">Delete</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
 			<td class="round"></td>
 		</tr>
 		<tr>
 			<td class="round green">Quant.</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
 			<td class="round orange">Solo</td>
 		</tr>
 		<tr>
 			<td class="round green">Dupl.</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
 			<td class="round red">Mute</td>
 		</tr>
 		<tr>
 			<td class="round green">Double</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
 			<td class="round blue"><div class="note">stop selected clip</div>Stop</td>
 		</tr>
 			<td class="round red">Rec</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
-			<td class="pad ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad blue ">&nbsp;</td>
+			<td class="pad purple">&nbsp;</td>
 			<td class="round blue"><div class="note">start selected clip</div>Start</td>
 		</tr>
 		</tr class="bottom">
@@ -389,8 +385,7 @@
 	</table>
 	</section>
 
-<!--
-	<section>
+	<!-- <section>
 	<h4>quick scale modes</h4>
 	<p>if quick scale is activated (last button on the right on the 2nd row in scale edit mode), the two first rows of the launchpad allow you to quickly change the scale.</p>
 	<p>this shows the two first rows of the launchpad. the last button of the first row changes between root note selection and mode selection.</p>
@@ -444,16 +439,177 @@
 		</tr>
 	</table>
 	</section>
+		-->
+	
+	
+	<section>
+	<h3>Device Controller Mode</h3>
+	<p>
+		Device Controller mode is a sub mode of User Mode 1. 
+		To activate Device Controller Mode, press User Mode 1 button once, 
+		the normal User Mode 1 is activated (mode button remains amber). 
+		Press User Mode 1 button once again, button turns green, activating the Device Controller. 
+	</p>
+	<h4>Navigation</h4>
+	<p>
+		Navigation among tracks and devices is done using the top left navigation buttons. 
+	</p>
+	
+	<h4>Editing parameters</h4>
+	<p>		
+		You can edit eight parameters of the selected device on the 
+		selected track at once. One parameter per column.
+		You can navigate banks of parameters using scene buttons 2 and 3.
+		depending on the type of parameter edited launchpad will display then in different ways.
+	</p>
+	<dl>
+		<dt>On/Off parameters</dt>
+		<dd>using the color code red. only one button will be used to change the parameter</dd>
+		
+		<dt>Parameter with list of values</dt>
+		<dd>for the parameters that have a list of values, the colour code it amber, for example a Synth wave form selector (square, sine, triangle). 
+			If the parameter has less that 8 values, they will be directly acessible one by one.
+			if more values are available, you can scroll thru the values. the closer the button to the center the more precise. the closer the top or bottom of the launchpad, the greater the value change will be at each press.</dd>
+		<dt>Parameter continuous values</dt>
+		<dd>for the parameters that have a continuous value, like Volume, Panning, etc, the colour code is green.
+			by default Launchpad displays the parameter like a volume slider on the mixer mode.
+			if you activate the precision slider mode (by pressing scene 4 button), the sliders will then work in the similar way to the case of parameter with list of values.
+		</dd>
+	<dl>
+	<h4>Locking to devices</h4>
+	<p>		
+		you can save up to 4 devices using the 4 bottom scene button. if not device is saved, the button will be amber.
+		To save a device, first select the desired device, then press one of the 4 last scene buttons for more than half a second.
+		the button turn red ! your device is save. you can recall it at any time by a short press on the scene button.
+		to unsave a device, apply a long press again on the button.  
+	</p>
+	<table class="launchpad">
+			<tr class="top">
+				<td></td>
+				<td class="round purple">Device+</td>
+				<td class="round purple">Device-</td>
+				<td class="round purple">Track-</td>
+				<td class="round purple">Track+</td>
+				<td class="round green">Session</td>
+				<td class="round blue">Note</td>
+				<td class="round purple">Device</td>
+				<td class="round orange">Step</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="round green">Shift</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round purple">On/Off</td>
+			</tr>
+			<tr>
+				<td class="round green">Click</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round blue">Bank+</td>
+			</tr>
+			<tr>
+				<td class="round green">Undo</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round blue">Bank-</td>
+			</tr>
+			<tr>
+				<td class="round green">Delete</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round blue">Precision</td>
+			</tr>
+			<tr>
+				<td class="round green">Quant.</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="round purple">Lock1</td>
+			</tr>
+			<tr>
+				<td class="round green">Dupl.</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="round purple">Lock2</td>
+			</tr>
+			<tr>
+				<td class="round green">Double</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="round purple">Lock3</td>
+			</tr>
+				<td class="round red">Rec</td>
+				<td class="pad purple">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="pad purple ">&nbsp;</td>
+				<td class="round purple">Lock4</td>
+			</tr>
+			</tr class="bottom">
+				<td></td>
+				<td class="round red">Arm</td>
+				<td class="round light_blue">Select</td>
+				<td class="round yellow">Mute</td>
+				<td class="round blue">Solo</td>
+				<td class="round green">Volume</td>
+				<td class="round orange">Pan</td>
+				<td class="round light_blue">Sends</td>
+				<td class="round red">Stop</td>
+				<td></td>
+			</tr>
+		</table>
+	</section>
 
 
 
 	<section>
 	<h3>Drum Step Sequencer Mode</h3>
-	<p>
-		To activate the Drum Step Sequencer, select a midi clip in the clip view.
-		Then press User Mode 2 button once, activating the step sequencer (in normal mode). 
-		Press user mode 2 button once more opens the Melodic step sequencer
-	</p>
 	<p> 
 		this sequencer has two sub modes detailed below. combined and multinotes. (note there is a second step sequencer, melodic step sequencer detailed further down).
 	</p>
@@ -526,20 +682,264 @@
 			</li>
 		</ul>
 	</p>
-
-	<br/><br/><br/>
-	
+	<table class="launchpad">
+			<tr class="top">
+				<td></td>
+				<td class="round orange">Device+</td>
+				<td class="round orange">Device-</td>
+				<td class="round orange">Track-</td>
+				<td class="round orange">Track+</td>
+				<td class="round green">Session</td>
+				<td class="round blue">Note</td>
+				<td class="round purple">Device</td>
+				<td class="round orange">Step</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="round green">Shift</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round orange">Scale</td>
+			</tr>
+			<tr>
+				<td class="round green">Click</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round orange">octave+</td>
+			</tr>
+			<tr>
+				<td class="round green">Undo</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round orange">Octave-</td>
+			</tr>
+			<tr>
+				<td class="round green">Delete</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round green">Quant</td>
+			</tr>
+			<tr>
+				<td class="round green">Quant.</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad purple">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="round green">Velocity</td>
+			</tr>
+			<tr>
+				<td class="round green">Dupl.</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round orange">mode</td>
+			</tr>
+			<tr>
+				<td class="round green">Double</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round red">mute</td>
+			</tr>
+				<td class="round red">Rec</td>
+				<td class="pad amber">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round purple">Lock</td>
+			</tr>
+			</tr class="bottom">
+				<td></td>
+				<td class="round red">Arm</td>
+				<td class="round light_blue">Select</td>
+				<td class="round yellow">Mute</td>
+				<td class="round blue">Solo</td>
+				<td class="round green">Volume</td>
+				<td class="round orange">Pan</td>
+				<td class="round light_blue">Sends</td>
+				<td class="round red">Stop</td>
+				<td></td>
+			</tr>
+		</table>
 	</section>
+	<br/><br/>
+	
 
 	<section>
-	<h4>Melodic Mode</h4>
-
+	<h4>Multinote Mode</h4>
 	<p>
-		This mode uses the grid as a 8*8 matrix. one midi note per row. it follows the scale mode selected. Note that the left and right arrows are used to navigate left and right in the clip.
+		This sub-mode of the drum rack mode step sequencer uses the grid as a 8*8 matrix. 
+		one midi note per row. 
+		it follows the scale mode selected. 
 	</p>
+	
+	<table class="launchpad">
+			<tr class="top">
+				<td></td>
+				<td class="round orange">Device+</td>
+				<td class="round orange">Device-</td>
+				<td class="round orange">Track-</td>
+				<td class="round orange">Track+</td>
+				<td class="round green">Session</td>
+				<td class="round blue">Note</td>
+				<td class="round purple">Device</td>
+				<td class="round orange">Step</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="round green">Shift</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round orange">Scale</td>
+			</tr>
+			<tr>
+				<td class="round green">Click</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round orange">octave+</td>
+			</tr>
+			<tr>
+				<td class="round green">Undo</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round orange">Octave-</td>
+			</tr>
+			<tr>
+				<td class="round green">Delete</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad green">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round green">Quant</td>
+			</tr>
+			<tr>
+				<td class="round green">Quant.</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad">&nbsp;</td>
+				<td class="pad">&nbsp;</td>
+				<td class="pad">&nbsp;</td>
+				<td class="pad">&nbsp;</td>
+				<td class="round green">Velocity</td>
+			</tr>
+			<tr>
+				<td class="round green">Dupl.</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad green ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round orange">mode</td>
+			</tr>
+			<tr>
+				<td class="round green">Double</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad gren ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round red">mute</td>
+			</tr>
+				<td class="round red">Rec</td>
+				<td class="pad amber">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue ">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="round purple">Lock</td>
+			</tr>
+			</tr class="bottom">
+				<td></td>
+				<td class="round red">Arm</td>
+				<td class="round light_blue">Select</td>
+				<td class="round yellow">Mute</td>
+				<td class="round blue">Solo</td>
+				<td class="round green">Volume</td>
+				<td class="round orange">Pan</td>
+				<td class="round light_blue">Sends</td>
+				<td class="round red">Stop</td>
+				<td></td>
+			</tr>
+		</table>
+	</section>
+	</section>
 	<br/><br/><br/>
 	
-	</section>
 
 
 	<section>
@@ -548,24 +948,25 @@
 	    To activate this mode, press user mode 2 button until it turns green.
 	</p>
 	<p>
-		This mode behave more how a hardware stepsequencer works. it uses the grid as a 7*8 matrix to edit note pitch, velocity, length and octave. one function per page.
+		This mode behave more how a hardware stepsequencer works. 
+		it uses the grid as a 7*8 matrix to edit note pitch, velocity, length and octave. one function per page.
 		of course notes pitches follow the selected scale !
 	</p>
 	<p>
 		The last row of the matrix acts as a page selector and work in the similar fashion to the combined step stequencer loop selector.
 	</p>
 	<p>
-		double press on the last scene button toggles between monophonic and polyphonic modes.
+		double press on the pitch mode button to toggle between monophonic and polyphonic modes.
 	</p>
 
 	<br/><br/><br/>
 	<table class="launchpad">
 			<tr class="top">
 				<td></td>
-				<td class="round blue">Scene+</td>
-				<td class="round blue">Scene-</td>
-				<td class="round blue">Track-</td>
-				<td class="round blue">Track+</td>
+				<td class="round orange">Device+</td>
+				<td class="round orange">Device-</td>
+				<td class="round orange">Track-</td>
+				<td class="round orange">Track+</td>
 				<td class="round green">Session</td>
 				<td class="round blue">Note</td>
 				<td class="round purple">Device</td>
@@ -582,7 +983,7 @@
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
-				<td class="round blue"><div class="note">enter scale edition mode</div>Scale</td>
+				<td class="round orange">Scale</td>
 			</tr>
 			<tr>
 				<td class="round green">Click</td>
@@ -594,7 +995,7 @@
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
-				<td class="round blue">Octave+</td>
+				<td class="round purple">octave</td>
 			</tr>
 			<tr>
 				<td class="round green">Undo</td>
@@ -606,7 +1007,7 @@
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
-				<td class="round blue">Octave-</td>
+				<td class="round purple">pitch</td>
 			</tr>
 			<tr>
 				<td class="round green">Delete</td>
@@ -616,12 +1017,13 @@
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round"></td>
+				<td class="round green">Quant</td>
 			</tr>
 			<tr>
 				<td class="round green">Quant.</td>
+				<td class="pad blue">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
@@ -629,8 +1031,7 @@
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round orange">Solo</td>
+				<td class="round blue">Velocity</td>
 			</tr>
 			<tr>
 				<td class="round green">Dupl.</td>
@@ -642,195 +1043,30 @@
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
-				<td class="round red">Mute</td>
+				<td class="round green">Length</td>
 			</tr>
 			<tr>
 				<td class="round green">Double</td>
 				<td class="pad ">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad ">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round blue"><div class="note">stop selected clip</div>Stop</td>
+				<td class="round red">random</td>
 			</tr>
 				<td class="round red">Rec</td>
+				<td class="pad orange">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
+				<td class="pad blue">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
 				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round blue"><div class="note">start selected clip</div>Start</td>
-			</tr>
-			</tr class="bottom">
-				<td></td>
-				<td class="round red">Arm</td>
-				<td class="round light_blue">Select</td>
-				<td class="round yellow">Mute</td>
-				<td class="round blue">Solo</td>
-				<td class="round green">Volume</td>
-				<td class="round orange">Pan</td>
-				<td class="round light_blue">Sends</td>
-				<td class="round red">Stop</td>
-				<td></td>
-			</tr>
-		</table>
-	</section>
-	-->
-
-	<section>
-	<h3>Device Controller Mode</h3>
-	<p>
-		Device Controller mode is a sub mode of User Mode 1. 
-		To activate Device Controller Mode, press User Mode 1 button once, 
-		the normal User Mode 1 is activated (mode button remains amber). 
-		Press User Mode 1 button once again, button turns green, activating the Device Controller. 
-	</p>
-	<h4>Navigation</h4>
-	<p>
-		Navigation among tracks and devices is done using the top left navigation buttons. 
-	</p>
-	
-	<h4>Editing parameters</h4>
-	<p>		
-		You can edit eight parameters of the selected device on the 
-		selected track at once. One parameter per column.
-		You can navigate banks of parameters using scene buttons 2 and 3.
-		depending on the type of parameter edited launchpad will display then in different ways.
-	</p>
-	<dl>
-		<dt>On/Off parameters</dt>
-		<dd>using the color code red. only one button will be used to change the parameter</dd>
-		
-		<dt>Parameter with list of values</dt>
-		<dd>for the parameters that have a list of values, the colour code it amber, for example a Synth wave form selector (square, sine, triangle). 
-			If the parameter has less that 8 values, they will be directly acessible one by one.
-			if more values are available, you can scroll thru the values. the closer the button to the center the more precise. the closer the top or bottom of the launchpad, the greater the value change will be at each press.</dd>
-		<dt>Parameter continuous values</dt>
-		<dd>for the parameters that have a continuous value, like Volume, Panning, etc, the colour code is green.
-			by default Launchpad displays the parameter like a volume slider on the mixer mode.
-			if you activate the precision slider mode (by pressing scene 4 button), the sliders will then work in the similar way to the case of parameter with list of values.
-		</dd>
-	<dl>
-	<h4>Locking to devices</h4>
-	<p>		
-		you can save up to 4 devices using the 4 bottom scene button. if not device is saved, the button will be amber.
-		To save a device, first select the desired device, then press one of the 4 last scene buttons for more than half a second.
-		the button turn red ! your device is save. you can recall it at any time by a short press on the scene button.
-		to unsave a device, apply a long press again on the button.  
-	</p>
-	<table class="launchpad">
-			<tr class="top">
-				<td></td>
-				<td class="round purple">Device+</td>
-				<td class="round purple">Device-</td>
-				<td class="round purple">Track-</td>
-				<td class="round purple">Track+</td>
-				<td class="round green">Session</td>
-				<td class="round blue">Note</td>
-				<td class="round purple">Device</td>
-				<td class="round orange">Step</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td class="round green">Shift</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round purple">On/Off</td>
-			</tr>
-			<tr>
-				<td class="round green">Click</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round purple">Bank+</td>
-			</tr>
-			<tr>
-				<td class="round green">Undo</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round purple">Bank-</td>
-			</tr>
-			<tr>
-				<td class="round green">Delete</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round purple">Precision</td>
-			</tr>
-			<tr>
-				<td class="round green">Quant.</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round purple">Lock1</td>
-			</tr>
-			<tr>
-				<td class="round green">Dupl.</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round purple">Lock2</td>
-			</tr>
-			<tr>
-				<td class="round green">Double</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round purple">Lock3</td>
-			</tr>
-				<td class="round red">Rec</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round purple">Lock4</td>
+				<td class="round purple">Lock</td>
 			</tr>
 			</tr class="bottom">
 				<td></td>
@@ -848,133 +1084,7 @@
 	</section>
 
 
-	<section>
-	<h3>Session Mode</h3>
-	<table class="launchpad">
-			<tr class="top">
-				<td></td>
-				<td class="round blue">Scene+</td>
-				<td class="round blue">Scene-</td>
-				<td class="round blue">Track-</td>
-				<td class="round blue">Track+</td>
-				<td class="round green">Session</td>
-				<td class="round blue">Note</td>
-				<td class="round purple">Device</td>
-				<td class="round orange">Step</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td class="round green">Shift</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round"></td>
-			</tr>
-			<tr>
-				<td class="round green">Click</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round"></td>
-			</tr>
-			<tr>
-				<td class="round green">Undo</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round"></td>
-			</tr>
-			<tr>
-				<td class="round green">Delete</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round"></td>
-			</tr>
-			<tr>
-				<td class="round green">Quant.</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round"></td>
-			</tr>
-			<tr>
-				<td class="round green">Dupl.</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round"></td>
-			</tr>
-			<tr>
-				<td class="round green">Double</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round"></td>
-			</tr>
-				<td class="round red">Rec</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="pad ">&nbsp;</td>
-				<td class="round"></td>
-			</tr>
-			</tr class="bottom">
-				<td></td>
-				<td class="round red">Arm</td>
-				<td class="round light_blue">Select</td>
-				<td class="round yellow">Mute</td>
-				<td class="round blue">Solo</td>
-				<td class="round green">Volume</td>
-				<td class="round orange">Pan</td>
-				<td class="round light_blue">Sends</td>
-				<td class="round red">Stop</td>
-				<td></td>
-			</tr>
-		</table>
-	</section>
 
-
-	
 
 	<section>
 	<h2>Source</h2>
@@ -989,6 +1099,8 @@
 		<dt id="faq-1">1. Which Launchpad flavours are supported</dt>
 		<dd>
 			Launchpad Pro.<br/>
+			For all other launchpads, see Launchpad95.<br/>
+			<br/>
 		</dd>
 
 		<dt id="faq-2">2. Which Ableton live versions are supported</dt>
@@ -1006,15 +1118,15 @@
 			On pc/windows 7 : inside "C:\ProgramData\Ableton\Live&nbsp;9&nbsp;Suite\Resources\MIDI&nbsp;Remote&nbsp;Scripts"<br/>
 			On a mac right-click the Live application you use (there might more than one installed!) and select "view package content", then browse to "App-Resources/MIDI&nbsp;Remote&nbsp;Scripts". <br/>
 			<br/>
-			Inside this "MIDI&nbsp;Remote&nbsp;Scripts" folder, you should have a folder called "Launchpad95". inside this folder you should have a bunch of .py files, and a for each of them a .pyc file. (.pyc files are compiled version of the .py that live compiles as you start it.)<br/>
+			Inside this "MIDI&nbsp;Remote&nbsp;Scripts" folder, you should have a folder called "Launchpad_Pro95". inside this folder you should have a bunch of .py files, and a for each of them a .pyc file. (.pyc files are compiled version of the .py that live compiles as you start it.)<br/>
 			<br/>
-			As sometimes Sometimes a picture is worth 1000 words ! take a look at these screenshots.<br/>
+			Sometimes a picture is worth 1000 words. Take a look at these screenshots.<br/>
 			- On a mac it look like <a href="install_mac.png">this</a>.<br/>
 			- on a pc like <a href="install_windows.png">that</a><br/>
 			<br/>
 		</dd>
 
-		<dt id="faq-4">4. It does not work, i installed everything, but the launchpad does not light up when i select Launchpad95 in the dropdown in the preferences. what is wrong ? </dt>
+		<dt id="faq-4">4. It does not work, i installed everything, but the launchpad does not light up when i select Launchpad_Pro95 in the dropdown in the preferences. what is wrong ? </dt>
 		<dd>
 			It is hard to guess what you did wrong. You must have installed not the right way somehow. 
 			try to install it from scratch again, download from this site, extract install, restart live.
@@ -1023,26 +1135,26 @@
 				<li> - check the you installed at the right place. (check <a href="#faq-3">question #3</a> !)</li>	
 				<li> - Pay attention to the folder name AND its full path. (again see screenshots in above in <a href="#faq-3">question #3</a>)</li>
 				<li> - how many versions of live do you have installed ?</li>
-				<li> - are you running live 9.5 or greater ? for live 8 please use launchpad85. For live 9.0, upgrade to live 9.5. </li>
+				<li> - are you running live 9.5 or greater ?</li>
 			</ul>
 			<br/>
 		</dd>
 
-		<dt id="faq-5">5. It does not work, i installed everything, but Launchpad95 does not appears the dropdown in the preferences. what is wrong ? </dt>
+		<dt id="faq-5">5. It does not work, i installed everything, but Launchpad_Pro95 does not appears the dropdown in the preferences. what is wrong ? </dt>
 		<dd>
-			see <a href="#faq-4">question 4</a>.<br/>
+			See <a href="#faq-4">question 4</a>.<br/>
 			<br/>
 		</dd>
 
 		<dt id="faq-6">6. Note Feedback is not working in Instrument Controller</dt>
 		<dd>
-			make sure you activated the launchapd midi in/out as "track" in Live midi preferences.<br/>
+			Make sure you activated the launchapd midi in/out as "track" in Live midi preferences.<br/>
 			<br/>
 		</dd>
 
-		<dt id="faq-7">7. good work ! i wish to donate ! is there a way to donate somehow ?</dt>
+		<dt id="faq-7">7. Good work ! i wish to support this work   ! is there a way to donate somehow ?</dt>
 		<dd>
-			 you can use <a href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_send-money&amp;nav=1&amp;email=hdavid@mail.com">paypal</a> to my account hdavid@mail.com.
+			 You can use <a href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_send-money&amp;nav=1&amp;email=hdavid@mail.com">paypal</a> to my account hdavid@mail.com.
 		</dd>
 
 
@@ -1058,7 +1170,9 @@
 	<section>
 	<h2>History</h2>
 	<ul>
-		<li>2015-12 - working on an initial version</li>	
+		<li>2016-01-10 - bug fixes</li>
+		<li>2015-12-28 - first public version</li>
+		<li>2015-10 - working on an initial version</li>	
 	</ul>
 
 	</section>

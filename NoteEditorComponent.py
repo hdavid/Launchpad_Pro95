@@ -21,10 +21,8 @@ class NoteEditorComponent(ControlSurfaceComponent):
 		# metronome
 		self.display_metronome = True
 		self.metronome_color = "StepSequencer.NoteEditor.Metronome"
-
-		# Velocity colour map. this must remain of lengh 3.
-		self.velocity_map = [70, 90, 110]
-		self.velocity_color_map = ["StepSequencer.NoteEditor.Velocity1","StepSequencer.NoteEditor.Velocity2","StepSequencer.NoteEditor.Velocity3"]
+		self.velocities = 4
+		self.velocity_skin_name = "StepSequencer.NoteEditor.Velocity"
 		# other colors
 		self.muted_note_color = "StepSequencer.NoteEditor.Muted"
 		self.playing_note_color = "StepSequencer.NoteEditor.Playing"
@@ -56,7 +54,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 
 		# velocity
 		self._velocity_index = 2
-		self._velocity = self.velocity_map[self._velocity_index]
+		self._velocity = 100
 		self._is_velocity_shifted = False
 		self._velocity_notes_pressed = 0
 		self._velocity_last_press = time.time()
@@ -269,10 +267,10 @@ class NoteEditorComponent(ControlSurfaceComponent):
 
 					if note_grid_x_position >= 0:
 						# compute colors
-						velocity_color = self.velocity_color_map[0]
-						for index in range(len(self.velocity_map)):
-							if note_velocity >= self.velocity_map[index]:
-								velocity_color = self.velocity_color_map[index]
+						velocity_color = self.velocity_skin_name+str(0)
+						for index in range(self.velocities):
+							if note_velocity >= index*127/self.velocities:
+								velocity_color = self.velocity_skin_name+str(index)
 						# highligh playing notes in red. even if they are from other pages.
 						if not note_muted and note_page == play_page and play_x_position == note_grid_x_position and (play_y_position == note_grid_y_position and not self.is_multinote or self.is_multinote and note_grid_y_offset == play_row) and self.song().is_playing and self._clip.is_playing:
 							self._grid_back_buffer[note_grid_x_position][note_grid_y_position] = self.playing_note_color
@@ -296,6 +294,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 					if(self._grid_back_buffer[x][y] != self._grid_buffer[x][y] or self._force_update):
 						self._grid_buffer[x][y] = self._grid_back_buffer[x][y]
 						self._matrix.get_button(x, y).set_light(self._grid_buffer[x][y])
+						#self._control_surface.log_message("update "+str(x)+"-"+str(y)+":"+str(self._grid_buffer[x][y]))
 			self._force_update = False
 
 	def request_display_page(self):
@@ -341,7 +340,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 				else:
 					time = self.quantization * (self._page * self.width * self.number_of_lines_per_note + y * self.width + x)
 					pitch = self._key_indexes[0]
-				velocity = self._velocity
+				velocity = value#self._velocity
 				duration = self.quantization
 
 				# TODO: use new better way for editing clip
@@ -356,11 +355,11 @@ class NoteEditorComponent(ControlSurfaceComponent):
 					if pitch == note[0] and time == note[1]:
 						if self._is_velocity_shifted:
 							# update velocity of the note
-							new_velocity_index = 0
-							for index in range(len(self.velocity_map)):
-								if note[3] >= self.velocity_map[index]:
-									new_velocity_index = (index + 1) % len(self.velocity_map)
-							note_cache.append([note[0], note[1], note[2], self.velocity_map[new_velocity_index], note[4]])
+							new_velocity= 0
+							for index in range(self.velocities):
+								if note[3] >= (index+1)*127/self.velocities:
+									new_velocity = (index+1)*127/self.velocities
+							note_cache.append([note[0], note[1], note[2], new_velocity, note[4]])
 						elif not self._is_mute_shifted:
 							note_cache.remove(note)
 						else:
@@ -384,7 +383,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 					self._velocity_button.set_on_off_values("StepSequencer.NoteEditor.VelocityShifted.On", "StepSequencer.NoteEditor.VelocityShifted.Off")
 					self._velocity_button.turn_on()
 				else:
-					self._velocity_button.set_on_off_values(self.velocity_color_map[self._velocity_index], "DefaultButton.Off")
+					#self._velocity_button.set_on_off_values(self.velocity_skin_name+str(self._velocity_index), "DefaultButton.Off")
 					self._velocity_button.turn_on()
 			else:
 				self._velocity_button.set_on_off_values("DefaultButton.Off", "DefaultButton.Off")
@@ -405,10 +404,10 @@ class NoteEditorComponent(ControlSurfaceComponent):
 		if self.is_enabled():
 			if ((value is 0) or (not sender.is_momentary())):
 				# button released
-				if self._velocity_notes_pressed == 0 and time.time() - self._velocity_last_press < self.long_button_press:
+				#if self._velocity_notes_pressed == 0 and time.time() - self._velocity_last_press < self.long_button_press:
 					# cycle thru velocities
-					self._velocity_index = (len(self.velocity_map) + self._velocity_index + 1) % len(self.velocity_map)
-					self._velocity = self.velocity_map[self._velocity_index]
+					#self._velocity_index = (len(self.velocity_map) + self._velocity_index + 1) % len(self.velocity_map)
+					#self._velocity = self.velocity_map[self._velocity_index]
 				self._is_velocity_shifted = False
 				self._stepsequencer._track_controller._implicit_arm = self._is_velocity_shifted
 				self._stepsequencer._track_controller._do_implicit_arm()

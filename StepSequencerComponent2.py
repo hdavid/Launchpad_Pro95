@@ -296,9 +296,9 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 									self._grid_back_buffer[x][y] = "StepSequencer2.Octave.Off"
 							else:
 								if self._notes_octaves[x + 8 * self._page] == 6 - y:
-									self._grid_back_buffer[x][y] = "StepSequencer2.Octave.OnDim"
+									self._grid_back_buffer[x][y] = "StepSequencer2.Octave.Dim"
 								else:
-									self._grid_back_buffer[x][y] = "StepSequencer2.Octave.OffDim"
+									self._grid_back_buffer[x][y] = "StepSequencer2.Octave.Off"
 
 						elif self._mode == STEPSEQ_MODE_NOTES_VELOCITIES:
 							if(has_note):
@@ -308,9 +308,9 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 									self._grid_back_buffer[x][y] = "StepSequencer2.Velocity.Off"
 							else:
 								if self._notes_velocities[x + 8 * self._page] >= 6 - y:
-									self._grid_back_buffer[x][y] = "StepSequencer2.Velocity.OnDim"
+									self._grid_back_buffer[x][y] = "StepSequencer2.Velocity.Dim"
 								else:
-									self._grid_back_buffer[x][y] = "StepSequencer2.Velocity.OffDim"
+									self._grid_back_buffer[x][y] = "StepSequencer2.Velocity.Off"
 
 						elif self._mode == STEPSEQ_MODE_NOTES_LENGTHS:
 							if has_note:
@@ -320,9 +320,9 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 									self._grid_back_buffer[x][y] = "StepSequencer2.Length.Off"
 							else:
 								if self._notes_lengths[x + 8 * self._page] >= 6 - y:
-									self._grid_back_buffer[x][y] = "StepSequencer2.Length.OnDim"
+									self._grid_back_buffer[x][y] = "StepSequencer2.Length.Dim"
 								else:
-									self._grid_back_buffer[x][y] = "StepSequencer2.Length.OffDim"
+									self._grid_back_buffer[x][y] = "StepSequencer2.Length.Off"
 				# metronome
 				if self._playhead != None:
 					play_position = int(self._playhead / self.quantization)
@@ -502,7 +502,7 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 		if self.is_enabled():
 			if (self._mode_notes_pitches_button != None):
 				if self._clip != None:
-					self._mode_notes_pitches_button.set_on_off_values("StepSequencer2.Pitch.On", "StepSequencer2.Pitch.OnDim")
+					self._mode_notes_pitches_button.set_on_off_values("StepSequencer2.Pitch.On", "StepSequencer2.Pitch.Dim")
 					if self._mode == STEPSEQ_MODE_NOTES:
 						self._mode_notes_pitches_button.turn_on()
 					else:
@@ -549,7 +549,7 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 		if self.is_enabled():
 			if (self._mode_notes_octaves_button != None):
 				if self._clip != None:
-					self._mode_notes_octaves_button.set_on_off_values("StepSequencer2.Octave.On", "StepSequencer2.Octave.Off")
+					self._mode_notes_octaves_button.set_on_off_values("StepSequencer2.Octave.On", "StepSequencer2.Octave.Dim")
 					if self._mode == STEPSEQ_MODE_NOTES_OCTAVES:
 						self._mode_notes_octaves_button.turn_on()
 					else:
@@ -585,7 +585,7 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 		if self.is_enabled():
 			if (self._mode_notes_velocities_button != None):
 				if self._clip != None:
-					self._mode_notes_velocities_button.set_on_off_values("StepSequencer2.Velocity.On", "StepSequencer2.Velocity.Off")
+					self._mode_notes_velocities_button.set_on_off_values("StepSequencer2.Velocity.On", "StepSequencer2.Velocity.Dim")
 					if self._mode == STEPSEQ_MODE_NOTES_VELOCITIES:
 						self._mode_notes_velocities_button.turn_on()
 					else:
@@ -624,7 +624,7 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 		if self.is_enabled():
 			if (self._mode_notes_lengths_button != None):
 				if self._clip != None:
-					self._mode_notes_lengths_button.set_on_off_values("StepSequencer2.Length.On", "StepSequencer2.Length.Off")
+					self._mode_notes_lengths_button.set_on_off_values("StepSequencer2.Length.On", "StepSequencer2.Length.Dim")
 					if self._mode == STEPSEQ_MODE_NOTES_LENGTHS:
 						self._mode_notes_lengths_button.turn_on()
 					else:

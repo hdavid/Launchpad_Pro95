@@ -53,7 +53,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 		if self._buttons:
 			for button in self._buttons:
 				assert isinstance(button, ButtonElement)
-				button.add_value_listener(self.note_offset_button_value, identify_sender=True)
+				button.remove_value_listener(self.note_offset_button_value)
 		self._buttons = buttons
 		if self._buttons:
 			for button in self._buttons:
@@ -740,26 +740,49 @@ class StepSequencerComponent(CompoundComponent):
 	
 	def set_matrix(self,matrix):
 		self._matrix = matrix
-		if matrix !=None:
-			self._height = matrix.height()
-			self._width = matrix.width()	
-			self._loop_selector.set_buttons(
-				[self._matrix.get_button(4, 4), self._matrix.get_button(5, 4), self._matrix.get_button(6, 4), self._matrix.get_button(7, 4),
-				self._matrix.get_button(4, 5), self._matrix.get_button(5, 5), self._matrix.get_button(6, 5), self._matrix.get_button(7, 5),
-				self._matrix.get_button(4, 6), self._matrix.get_button(5, 6), self._matrix.get_button(6, 6), self._matrix.get_button(7, 6),
-				self._matrix.get_button(4, 7), self._matrix.get_button(5, 7), self._matrix.get_button(6, 7), self._matrix.get_button(7, 7)]
-			)
-			self._note_selector.set_buttons([
-				self._matrix.get_button(0, 7), self._matrix.get_button(1, 7), self._matrix.get_button(2, 7), self._matrix.get_button(3, 7),
-				self._matrix.get_button(0, 6), self._matrix.get_button(1, 6), self._matrix.get_button(2, 6), self._matrix.get_button(3, 6),
-				self._matrix.get_button(0, 5), self._matrix.get_button(1, 5), self._matrix.get_button(2, 5), self._matrix.get_button(3, 5),
-				self._matrix.get_button(0, 4), self._matrix.get_button(1, 4), self._matrix.get_button(2, 4), self._matrix.get_button(3, 4)]
-			)
+		self._delegate_matrix()
+		
+	def _delegate_matrix(self):
+		if self._matrix !=None:
+			if self._mode == STEPSEQ_MODE_SCALE_EDIT:
+				self._scale_component.set_matrix(self._matrix)
+				self._loop_selector.set_buttons(None)
+				self._note_selector.set_buttons(None)
+				self._note_editor.set_matrix(None)
+			elif self._mode == STEPSEQ_MODE_MULTINOTE:
+				self._height = self._matrix.height()-1
+				self._width = self._matrix.width()
+				self._scale_component.set_matrix(None)
+				self._note_selector.set_buttons(None)
+				self._loop_selector.set_buttons(
+					[self._matrix.get_button(0, 7), self._matrix.get_button(1, 7), self._matrix.get_button(2, 7), self._matrix.get_button(3, 7),
+					self._matrix.get_button(4, 7), self._matrix.get_button(5, 7), self._matrix.get_button(6, 7), self._matrix.get_button(7, 7)]
+				)
+				self._note_editor.set_matrix(self._matrix)
+				
+			elif self._mode == STEPSEQ_MODE_NORMAL:
+				self._height = self._matrix.height()
+				self._width = self._matrix.width()
+				self._scale_component.set_matrix(None)
+				self._loop_selector.set_buttons(
+					[self._matrix.get_button(4, 4), self._matrix.get_button(5, 4), self._matrix.get_button(6, 4), self._matrix.get_button(7, 4),
+					self._matrix.get_button(4, 5), self._matrix.get_button(5, 5), self._matrix.get_button(6, 5), self._matrix.get_button(7, 5),
+					self._matrix.get_button(4, 6), self._matrix.get_button(5, 6), self._matrix.get_button(6, 6), self._matrix.get_button(7, 6),
+					self._matrix.get_button(4, 7), self._matrix.get_button(5, 7), self._matrix.get_button(6, 7), self._matrix.get_button(7, 7)]
+				)
+				self._note_selector.set_buttons([
+					self._matrix.get_button(0, 7), self._matrix.get_button(1, 7), self._matrix.get_button(2, 7), self._matrix.get_button(3, 7),
+					self._matrix.get_button(0, 6), self._matrix.get_button(1, 6), self._matrix.get_button(2, 6), self._matrix.get_button(3, 6),
+					self._matrix.get_button(0, 5), self._matrix.get_button(1, 5), self._matrix.get_button(2, 5), self._matrix.get_button(3, 5),
+					self._matrix.get_button(0, 4), self._matrix.get_button(1, 4), self._matrix.get_button(2, 4), self._matrix.get_button(3, 4)]
+				)
+				self._note_editor.set_matrix(self._matrix)
 		else:
 			self._loop_selector.set_buttons(None)
 			self._note_selector.set_buttons(None)
-		self._note_editor.set_matrix(matrix)
-		self._scale_component.set_matrix(self._matrix)
+			self._scale_component.set_matrix(None)
+			self._note_editor.set_matrix(None)
+		
 		
 		
 	def disconnect(self):
@@ -772,11 +795,11 @@ class StepSequencerComponent(CompoundComponent):
 		self._side_buttons = None
 		self._matrix = None
 
-		self._loop_selector = None
-		self._note_editor = None
-		self._note_selector = None
-		self._scale_component = None
-		self._track_controller = None
+		#self._loop_selector = None
+		#self._note_editor = None
+		#self._note_selector = None
+		#self._scale_component = None
+		#self._track_controller = None
 
 # SET FUNCTIONS
 
@@ -845,7 +868,7 @@ class StepSequencerComponent(CompoundComponent):
 			#	self._mode = STEPSEQ_MODE_NORMAL
 				#self._detect_scale_mode()
 
-			# sync to selected pad
+			#sync to selected pad
 			#self._update_drum_group_device()
 			#if(self._drum_group_device):
 			#	self._note_selector.set_selected_note(self.index_of(self._drum_group_device.drum_pads,self._drum_group_device.view.selected_drum_pad))
@@ -857,9 +880,6 @@ class StepSequencerComponent(CompoundComponent):
 				self._note_selector.set_selected_note(self._scale_component._octave_index * 12 + self._scale_component._selected_key)
 
 			self._track_controller.set_enabled(enabled)	
-			self._loop_selector.set_enabled(enabled)
-			self._note_selector.set_enabled(enabled)
-			self._note_editor.set_enabled(enabled)
 			# update clip notes as they might have changed while we were sleeping
 			self.on_clip_slot_changed()
 			# call super.set_enabled()
@@ -869,10 +889,6 @@ class StepSequencerComponent(CompoundComponent):
 			self._on_notes_changed()
 			
 		else:
-			self._track_controller.set_enabled(enabled)
-			self._loop_selector.set_enabled(enabled)
-			self._note_selector.set_enabled(enabled)
-			self._note_editor.set_enabled(enabled)
 			CompoundComponent.set_enabled(self, enabled)
 
 	def set_mode(self, mode, number_of_lines_per_note= -1):
@@ -899,6 +915,7 @@ class StepSequencerComponent(CompoundComponent):
 				#self.set_left_button(self._top_buttons[2])
 				#self.set_right_button(self._top_buttons[3])
 			self._mode = mode
+			self._delegate_matrix()
 			self._note_editor._force_update = True
 			self.update()
 
@@ -969,11 +986,11 @@ class StepSequencerComponent(CompoundComponent):
 		self._scale_component.update()
 
 	def _update_loop_selector(self):
-		self._loop_selector.set_enabled(self._mode == STEPSEQ_MODE_NORMAL)
+		self._loop_selector.set_enabled(self._mode != STEPSEQ_MODE_SCALE_EDIT)
 		self._loop_selector.update()
 
 	def _update_note_selector(self):
-		self._note_selector._enable_buttons = self._mode == STEPSEQ_MODE_NORMAL
+		#self._note_selector._enable_buttons = self._mode == STEPSEQ_MODE_NORMAL
 		self._note_selector.set_enabled(self._mode != STEPSEQ_MODE_SCALE_EDIT)
 		self._note_selector.update()
 
@@ -1340,16 +1357,16 @@ class StepSequencerComponent(CompoundComponent):
 			if ((value is not 0) or (not sender.is_momentary())):
 				self._last_mode_button_press = time.time()
 			else:
-				if self._mode == STEPSEQ_MODE_MULTINOTE and time.time() - self._last_mode_button_press > 0.25:
-					if(self._number_of_lines_per_note == 1):
-						number_of_lines_per_note = 2
-					else:
-						number_of_lines_per_note = 1
-					self.set_mode(STEPSEQ_MODE_MULTINOTE, number_of_lines_per_note)
+				#if self._mode == STEPSEQ_MODE_MULTINOTE and time.time() - self._last_mode_button_press > 0.25:
+				#	if(self._number_of_lines_per_note == 1):
+				#		number_of_lines_per_note = 2
+				#	else:
+				#		number_of_lines_per_note = 1
+				#	self.set_mode(STEPSEQ_MODE_MULTINOTE, number_of_lines_per_note)
 
-				elif self._mode != STEPSEQ_MODE_MULTINOTE:
+				#el
+				if self._mode != STEPSEQ_MODE_MULTINOTE:
 					self.set_mode(STEPSEQ_MODE_MULTINOTE, self._number_of_lines_per_note)
-
 				else:
 					self.set_mode(STEPSEQ_MODE_NORMAL, self._number_of_lines_per_note)
 
