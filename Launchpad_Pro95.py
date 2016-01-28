@@ -244,7 +244,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 				scene_bank_down_button=self._midimap['Arrow_Down_Button']
 			)
 		)
-		#self._session.set_enabled(True) # enable it on handshake successful
+		self._session.set_enabled(True)
 		self._session.set_rgb_mode(CLIP_COLOR_TABLE, RGB_COLOR_TABLE)
 		SpecialClipSlotComponent.quantization_component = self._actions_component
 		for scene_index in xrange(NUM_SCENES):

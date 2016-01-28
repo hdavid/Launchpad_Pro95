@@ -157,13 +157,17 @@ class DeviceComponent(LiveDeviceComponent):
 					self._prev_bank_button.set_on_off_values("DefaultButton.Disabled","DefaultButton.Disabled")
 				if self._next_bank_button != None:
 					self._next_bank_button.set_on_off_values("DefaultButton.Disabled","DefaultButton.Disabled")
-			
+			if self._matrix != None:
+				for x in range(self._matrix.width()):
+					for y in range(self._matrix.height()):
+						self._matrix.get_button(x, y).set_enabled(True)
+						
 			if self._device == None and self._matrix != None:
 				for x in range(self._matrix.width()):
 					for y in range(self._matrix.height()):
-						#if self._force:
-						self._matrix.get_button(x, y).set_on_off_values("DefaulyButton.Disabled","DefaultButton.Disabled")
-						self._matrix.get_button(x, y).turn_off()
+						if self._force:
+							self._matrix.get_button(x, y).set_on_off_values("DefaulyButton.Disabled","DefaultButton.Disabled")
+							self._matrix.get_button(x, y).turn_off()
 						
 			# update parent
 			LiveDeviceComponent.update(self)

@@ -683,7 +683,7 @@ class StepSequencerComponent2(StepSequencerComponent):
 		self._scale_component = self.register_component(
 			ScaleComponent(
 				control_surface = self._control_surface, 
-				enabled = False, 
+				enabled = True, 
 				mode = "diatonic"
 			)
 		)

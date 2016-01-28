@@ -744,6 +744,11 @@ class StepSequencerComponent(CompoundComponent):
 		
 	def _delegate_matrix(self):
 		if self._matrix !=None:
+			if self._matrix != None:
+				for x in range(self._matrix.width()):
+					for y in range(self._matrix.height()):
+						self._matrix.get_button(x, y).set_enabled(True)
+						
 			if self._mode == STEPSEQ_MODE_SCALE_EDIT:
 				self._scale_component.set_matrix(self._matrix)
 				self._loop_selector.set_buttons(None)
