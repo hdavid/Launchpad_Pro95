@@ -740,14 +740,14 @@ class StepSequencerComponent(CompoundComponent):
 	
 	def set_matrix(self,matrix):
 		self._matrix = matrix
+		self.set_enabled(self._matrix!=None)
 		self._delegate_matrix()
 		
 	def _delegate_matrix(self):
 		if self._matrix !=None:
-			if self._matrix != None:
-				for x in range(self._matrix.width()):
-					for y in range(self._matrix.height()):
-						self._matrix.get_button(x, y).set_enabled(True)
+			for x in range(self._matrix.width()):
+				for y in range(self._matrix.height()):
+					self._matrix.get_button(x, y).set_enabled(True)
 						
 			if self._mode == STEPSEQ_MODE_SCALE_EDIT:
 				self._scale_component.set_matrix(self._matrix)
@@ -947,7 +947,7 @@ class StepSequencerComponent(CompoundComponent):
 			except ValueError:
 				idx = -1
 			if(idx == -1):
-				self.log_message("not found : " + str(self._note_selector._offset) + " in " + str(self._note_selector._scale))
+				self._control_surface.log_message("not found : " + str(self._note_selector._offset) + " in " + str(self._note_selector._scale))
 				for i in range(8):
 					keys[i] = self._note_selector._root_note + self._note_selector._offset + i
 			else:

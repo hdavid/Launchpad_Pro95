@@ -124,8 +124,18 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 		self._quantization = quantization
 		# update loop point
 		if self._clip != None and old_quantize != self._quantization:
-			self._clip.loop_start = self._clip.loop_start * self._quantization / old_quantize
-			self._clip.loop_end = self._clip.loop_end * self._quantization / old_quantize
+			self._loop_start = self._clip.loop_start * self._quantization / old_quantize
+			self._loop_end = self._clip.loop_end * self._quantization / old_quantize
+			if self._loop_start >= self._clip.loop_end:
+				self._clip.loop_end = self._loop_end
+				self._clip.loop_start = self._loop_start
+				self._clip.end_marker = self._loop_end
+				self._clip.start_marker = self._loop_start
+			else:
+				self._clip.loop_start = self._loop_start
+				self._clip.loop_end = self._loop_end
+				self._clip.start_marker = self._loop_start
+				self._clip.end_marker = self._loop_end
 		# update clip notes
 		self._update_clip_notes()
 
@@ -665,15 +675,17 @@ class StepSequencerComponent2(StepSequencerComponent):
 		
 	
 	def set_matrix(self, matrix):
-		if matrix:
+		self._matrix = matrix
+		if self._matrix!=None:
 			self._loop_selector.set_buttons([
 				matrix.get_button(0, 7), matrix.get_button(1, 7), matrix.get_button(2, 7), matrix.get_button(3, 7),
 				matrix.get_button(4, 7), matrix.get_button(5, 7), matrix.get_button(6, 7), matrix.get_button(7, 7)
 				])
 		else:
 			self._loop_selector.set_buttons(None)
-		self._note_editor.set_matrix(matrix)
-		self._scale_component.set_matrix(matrix)
+		self._note_editor.set_matrix(self._matrix)
+		self._scale_component.set_matrix(self._matrix)
+		self.set_enabled(self._matrix!=None)
 		
 	
 	#def set_left_button(self, button):

@@ -186,7 +186,7 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._modes.update()
 		
 	def on_selected_scene_changed(self):
-		self._do_implicit_arm()
+		#self._do_implicit_arm()
 		self.update()
 
 	def set_mode(self, mode):
