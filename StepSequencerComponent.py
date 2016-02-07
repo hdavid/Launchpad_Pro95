@@ -678,7 +678,7 @@ class StepSequencerComponent(CompoundComponent):
 		self._playhead = 0
 		self._new_clip_pages = 4
 		# mode
-		self._mode = STEPSEQ_MODE_NORMAL
+		self._mode = -1
 		self._mode_backup = self._mode
 		# buttons
 		self._is_mute_shifted = None
@@ -745,6 +745,8 @@ class StepSequencerComponent(CompoundComponent):
 				for y in range(self._matrix.height()):
 					self._matrix.get_button(x, y).set_enabled(True)
 		self._delegate_matrix()
+		if self._mode==-1:
+			self.set_mode(STEPSEQ_MODE_NORMAL)
 		self.set_enabled(self._matrix!=None)
 		
 	def _delegate_matrix(self):

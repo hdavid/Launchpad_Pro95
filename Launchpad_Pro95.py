@@ -613,55 +613,63 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		
 		self._user_button_modes.add_mode(
 			'stepsequencer_mode',
-			LayerMode(
-				self._step_sequencer, 
-				Layer(
-					matrix = self._midimap['Main_Button_Matrix'],
-					prev_track_button = self._midimap['Arrow_Left_Button'],
-					next_track_button = self._midimap['Arrow_Right_Button'],
-					prev_scene_button = self._midimap['Arrow_Up_Button'],
-					next_scene_button = self._midimap['Arrow_Down_Button'],
-					scale_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][0],
-					octave_up_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][1],
-					octave_down_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][2],
-					quantization_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][3],
-					velocity_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][4],
-					mode_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][5], #replaced with solo ??
-					mute_shift_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][6],
-					lock_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][7]
+			[
+				partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+				LayerMode(
+					self._step_sequencer, 
+					Layer(
+						matrix = self._midimap['Main_Button_Matrix'],
+						prev_track_button = self._midimap['Arrow_Left_Button'],
+						next_track_button = self._midimap['Arrow_Right_Button'],
+						prev_scene_button = self._midimap['Arrow_Up_Button'],
+						next_scene_button = self._midimap['Arrow_Down_Button'],
+						scale_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][0],
+						octave_up_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][1],
+						octave_down_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][2],
+						quantization_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][3],
+						velocity_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][4],
+						mode_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][5], #replaced with solo ??
+						mute_shift_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][6],
+						lock_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][7]
+					)
 				)
-			)
+				#,self._step_sequencer.update()
+			]
 		)
 		
 		self._user_button_modes.add_mode(
 			'stepsequencer2_mode',
-			LayerMode(
-				self._step_sequencer2, 
-				Layer(
-					matrix = self._midimap['Main_Button_Matrix'],
-					prev_track_button = self._midimap['Arrow_Left_Button'],
-					next_track_button = self._midimap['Arrow_Right_Button'],
-					prev_scene_button = self._midimap['Arrow_Up_Button'],
-					next_scene_button = self._midimap['Arrow_Down_Button'],
-					scale_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][0],
-					octave_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][1],
-					pitch_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][2],
-					quantization_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][3],
-					velocity_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][4],
-					length_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][5],
-					random_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][6],
-					lock_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][7]
+			[
+				partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+				LayerMode(
+					self._step_sequencer2,
+					Layer(
+						matrix = self._midimap['Main_Button_Matrix'],
+						prev_track_button = self._midimap['Arrow_Left_Button'],
+						next_track_button = self._midimap['Arrow_Right_Button'],
+						prev_scene_button = self._midimap['Arrow_Up_Button'],
+						next_scene_button = self._midimap['Arrow_Down_Button'],
+						scale_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][0],
+						octave_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][1],
+						pitch_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][2],
+						quantization_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][3],
+						velocity_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][4],
+						length_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][5],
+						random_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][6],
+						lock_button = self._midimap['Scene_Launch_Button_Matrix_Raw'][0][7]
+					)
 				)
-			)
+				#,self._step_sequencer2.update()
+			]
 		)
 		
-		self._user_button_modes.add_mode('user_mode', [partial(self._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE)])
+		#self._user_button_modes.add_mode('user_mode', [partial(self._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE)])
 		self._user_button_modes.selected_mode = "stepsequencer_mode"
 		self._modes.add_mode(
 				'user_mode', 
 				[
 					#partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
-					partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+					#partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 					self._user_button_modes,
 					self._enable_user_button_modes
 				],
@@ -669,8 +677,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			)
 			
 	def _toggle_user_button_modes(self):
-		button = self._midimap['User_Mode_Button']
 		self._user_button_modes.cycle_mode()
+		button = self._midimap['User_Mode_Button']
 		if self._user_button_modes.selected_mode == "stepsequencer_mode":
 			button.default_states = {True: 'Mode.StepSequencer.On', False: 'Mode.StepSequencer.Off'}
 			self.show_message("drum step sequencer")
@@ -681,12 +689,14 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			button.default_states = {True: 'Mode.User.On', False: 'Mode.User.Off'}
 			self.show_message("user mode")
 		button.reset_state()
-		
-		
+		button.turn_on()
+		self._enable_user_button_modes()
 	
 	def _enable_user_button_modes(self):
 		self._step_sequencer.set_enabled(self._user_button_modes.selected_mode == "stepsequencer_mode")
 		self._step_sequencer2.set_enabled(self._user_button_modes.selected_mode == "stepsequencer2_mode")
+		self._step_sequencer.update()
+		self._step_sequencer2.update()
 		
 	def _create_record_arm_mode(self):
 		arm_layer_mode = LayerMode(
