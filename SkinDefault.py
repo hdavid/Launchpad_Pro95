@@ -126,11 +126,10 @@ class Colors:
 			class VelocityShifted:
 				On = Rgb.ORANGE
 				Off = Rgb.ORANGE_HALF
-			Velocity0 = Color(0)
-			Velocity1 = Color(27)
-			Velocity2 = Color(26)
-			Velocity3 = Color(25)
-			Velocity4 = Color(24)
+			Velocity0 = Color(27)
+			Velocity1 = Color(26)
+			Velocity2 = Color(25)
+			Velocity3 = Color(24)
 			Muted = Rgb.DARK_GREY
 			Playing = Rgb.RED
 			Metronome = Rgb.BLUE

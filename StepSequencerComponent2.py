@@ -674,18 +674,16 @@ class StepSequencerComponent2(StepSequencerComponent):
 		self._name = "melodic step sequencer"
 		
 	
-	def set_matrix(self, matrix):
-		self._matrix = matrix
+	def _delegate_matrix(self):
 		if self._matrix!=None:
 			self._loop_selector.set_buttons([
-				matrix.get_button(0, 7), matrix.get_button(1, 7), matrix.get_button(2, 7), matrix.get_button(3, 7),
-				matrix.get_button(4, 7), matrix.get_button(5, 7), matrix.get_button(6, 7), matrix.get_button(7, 7)
+					self._matrix.get_button(0, 7), self._matrix.get_button(1, 7), self._matrix.get_button(2, 7), self._matrix.get_button(3, 7),
+					self._matrix.get_button(4, 7), self._matrix.get_button(5, 7), self._matrix.get_button(6, 7), self._matrix.get_button(7, 7)
 				])
 		else:
 			self._loop_selector.set_buttons(None)
 		self._note_editor.set_matrix(self._matrix)
 		self._scale_component.set_matrix(self._matrix)
-		self.set_enabled(self._matrix!=None)
 		
 	
 	#def set_left_button(self, button):

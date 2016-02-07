@@ -21,7 +21,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 		# metronome
 		self.display_metronome = True
 		self.metronome_color = "StepSequencer.NoteEditor.Metronome"
-		self.velocities = 4
+		self.velocities = 3
 		self.velocity_skin_name = "StepSequencer.NoteEditor.Velocity"
 		# other colors
 		self.muted_note_color = "StepSequencer.NoteEditor.Muted"

@@ -207,7 +207,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			name='No_Op_Shifted_Buttons', 
 			is_enabled=False, 
 			layer=Layer(
-				click_button=self._midimap.with_shift('Click_Button'),
+				#click_button=self._midimap.with_shift('Click_Button'),
 				delete_button=self._midimap.with_shift('Delete_Button'),
 				duplicate_button=self._midimap.with_shift('Duplicate_Button'),
 				double_button=self._midimap.with_shift('Double_Loop_Button'),
@@ -223,6 +223,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 				undo_button=self._midimap['Undo_Button'],
 				redo_button=self._midimap.with_shift('Undo_Button'),
 				metronome_button=self._midimap['Click_Button'],
+				tap_button=self._midimap.with_shift('Click_Button'),
 				quantization_on_button=self._midimap.with_shift('Quantize_Button')
 			)
 		)

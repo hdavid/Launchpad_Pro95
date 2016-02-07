@@ -740,15 +740,15 @@ class StepSequencerComponent(CompoundComponent):
 	
 	def set_matrix(self,matrix):
 		self._matrix = matrix
-		self.set_enabled(self._matrix!=None)
-		self._delegate_matrix()
-		
-	def _delegate_matrix(self):
-		if self._matrix !=None:
+		if self._matrix!=None:
 			for x in range(self._matrix.width()):
 				for y in range(self._matrix.height()):
 					self._matrix.get_button(x, y).set_enabled(True)
-						
+		self._delegate_matrix()
+		self.set_enabled(self._matrix!=None)
+		
+	def _delegate_matrix(self):
+		if self._matrix !=None:
 			if self._mode == STEPSEQ_MODE_SCALE_EDIT:
 				self._scale_component.set_matrix(self._matrix)
 				self._loop_selector.set_buttons(None)
@@ -792,7 +792,6 @@ class StepSequencerComponent(CompoundComponent):
 		
 	def disconnect(self):
 		self._clip = None
-
 		self._lock_button = None
 		self._shift_button = None
 		self._quantization_button = None

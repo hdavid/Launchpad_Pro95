@@ -15,6 +15,7 @@ class ActionsComponent(ControlSurfaceComponent):
 	"""
 	undo_button = ButtonControl(**ACTION_BUTTON_COLORS)
 	redo_button = ButtonControl(color='Misc.Shift', pressed_color='Misc.ShiftOn', disabled_color='DefaultButton.Disabled')
+	tap_button = ButtonControl(color='Misc.Shift', pressed_color='Misc.ShiftOn', disabled_color='DefaultButton.Disabled')
 	quantization_on_button = ToggleButtonControl(untoggled_color='Misc.Shift', toggled_color='Misc.ShiftOn')
 
 	def __init__(self, *a, **k):
@@ -32,6 +33,10 @@ class ActionsComponent(ControlSurfaceComponent):
 		assert isinstance(clip, Live.Clip.Clip)
 		clip.quantize(self._record_quantization, 1.0)
 
+	@tap_button.pressed
+	def tap_button(self, button):
+		self.song().tap_tempo()
+			
 	@undo_button.pressed
 	def undo_button(self, button):
 		if self.song().can_undo:
