@@ -367,7 +367,7 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 			# caching : compare back buffer to buffer and update grid. this should minimize midi traffic quite a bit.
 			for x in range(8):
 				for y in range(7):
-					if self._grid_back_buffer[x][y] != self._grid_buffer[x][y] or self._force_update or True:
+					if self._grid_back_buffer[x][y] != self._grid_buffer[x][y] or self._force_update:
 						self._grid_buffer[x][y] = self._grid_back_buffer[x][y]
 						self._matrix.get_button(x,y).set_light(self._grid_buffer[x][y])
 						
@@ -704,7 +704,7 @@ class StepSequencerComponent2(StepSequencerComponent):
 				control_surface = self._control_surface,
 				implicit_arm = False,
 				skin_name = "StepSequencer2",
-				enabled = False
+				enabled = True
 			)
 		)
 		

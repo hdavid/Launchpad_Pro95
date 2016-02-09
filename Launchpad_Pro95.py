@@ -614,6 +614,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._user_button_modes.add_mode(
 			'stepsequencer_mode',
 			[
+				partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				LayerMode(
 					self._step_sequencer, 
@@ -640,6 +641,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._user_button_modes.add_mode(
 			'stepsequencer2_mode',
 			[
+				partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				LayerMode(
 					self._step_sequencer2,
@@ -663,15 +665,19 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			]
 		)
 		
-		#self._user_button_modes.add_mode('user_mode', [partial(self._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE)])
+		self._user_button_modes.add_mode('user_mode', [
+			partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
+			partial(self._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE)
+		])
 		self._user_button_modes.selected_mode = "stepsequencer_mode"
 		self._modes.add_mode(
 				'user_mode', 
 				[
-					#partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
-					#partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
-					self._user_button_modes,
-					self._enable_user_button_modes
+					partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
+					partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+					self._enable_user_button_modes,
+					self._user_button_modes
+					
 				],
 				behaviour=ReenterBehaviour(self._toggle_user_button_modes)
 			)
@@ -691,12 +697,14 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		button.reset_state()
 		button.turn_on()
 		self._enable_user_button_modes()
+		self._step_sequencer.update()
+		self._step_sequencer2.update()
 	
 	def _enable_user_button_modes(self):
 		self._step_sequencer.set_enabled(self._user_button_modes.selected_mode == "stepsequencer_mode")
 		self._step_sequencer2.set_enabled(self._user_button_modes.selected_mode == "stepsequencer2_mode")
-		self._step_sequencer.update()
-		self._step_sequencer2.update()
+		#self._step_sequencer.update()
+		#self._step_sequencer2.update()
 		
 	def _create_record_arm_mode(self):
 		arm_layer_mode = LayerMode(

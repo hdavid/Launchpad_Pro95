@@ -79,7 +79,7 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._modes.add_mode(
 			'drum_mode', 
 			[
-				#partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._control_surface._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				#partial(self._control_surface._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE),
 				self._control_surface._setup_drum_group(),
@@ -98,7 +98,7 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._modes.add_mode(
 			'scale_mode', 
 			[
-				#partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._control_surface._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				scale_layer_mode,
 				common_layer_mode#,
@@ -117,7 +117,7 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._modes.add_mode(
 			'note_mode', 
 			[
-				#partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._control_surface._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				note_layer_mode,
 				common_layer_mode#,
@@ -135,6 +135,7 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._modes.add_mode(
 			'audio_mode', 
 			[
+				partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
 				partial(self._control_surface._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				#partial(self._control_surface._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE),#consts.AUDIO_LAYOUT_SYSEX_BYTE),
 				self._control_surface._clip_delete_layer_mode,

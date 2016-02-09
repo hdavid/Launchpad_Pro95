@@ -148,9 +148,9 @@ class NoteEditorComponent(ControlSurfaceComponent):
 		self._update_matrix()
 
 	def update(self, force=False):
-		if force:
-			self._force_update = True
 		if self.is_enabled():
+			if force:
+				self._force_update = True
 			self._update_velocity_button()
 			self._update_matrix()
 
@@ -179,7 +179,7 @@ class NoteEditorComponent(ControlSurfaceComponent):
 			if (self._matrix != None):
 				self._matrix.add_value_listener(self._matrix_value)
 				self._width = self._matrix.width()
-				self._height = self._matrix.height()
+				#self._height = self._matrix.height()
 				self._grid_buffer = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]]
 				self._grid_back_buffer = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]]
 			
@@ -288,7 +288,6 @@ class NoteEditorComponent(ControlSurfaceComponent):
 					self._display_selected_page()
 
 			# caching : compare back buffer to buffer and update grid. this should minimize midi traffic quite a bit.
-
 			for x in range(self.width):
 				for y in range(self.height):
 					if(self._grid_back_buffer[x][y] != self._grid_buffer[x][y] or self._force_update):

@@ -111,7 +111,7 @@ class ScaleComponent(ControlSurfaceComponent):
 	
 	def update(self):
 		if self.is_enabled() and self.matrix!=None:
-			self._control_surface.log_message("update scale: "+str(self.matrix))
+			#self._control_surface.log_message("update scale: "+str(self.matrix))
 			super(ScaleComponent, self).update()
 			for index, button in enumerate(self.matrix):
 				row, col = button.coordinate

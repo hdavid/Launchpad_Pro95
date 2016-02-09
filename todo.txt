@@ -29,26 +29,18 @@ session :
 
 step seq2
 	wrong quantize on mode change/startup
-	wong scale/octave on first start
-	quick scale ? 
+	quick scale
+	flashing green mode...
+	
 	
 	
 step seq1
-	on first run the bottom lanes still trigger note clip stuff...
-	fix bug with ghost scale component
-	fix bug with init ghost (force)
-	fix bug with create clip
-	use velocity of the pressed pad
 	note selector 
 		using the instrument mode scale colors
 		mute
 	drumrack mode
 		use drum component in drum mode. => use separated drum component, so that it works with lock mode.
 		
-session :
-	record quantize ? 
-	launch quantize
-	select quantise value with scenes ??
 	
 scene buttons :
 	#step1		#step2		#instru		#device			

@@ -834,7 +834,7 @@ class StepSequencerComponent(CompoundComponent):
 			TrackControllerComponent(
 				control_surface = self._control_surface,
 				implicit_arm = False,
-				enabled = False, 
+				enabled = True, 
 				skin_name = "StepSequencer"
 			)
 		)
@@ -927,7 +927,7 @@ class StepSequencerComponent(CompoundComponent):
 
 	def set_page(self, block):
 		self._note_editor.set_page(block)
-		self._note_editor.update()
+		self._update_note_editor()
 
 # SCALE
 	def _scale_updated(self):
@@ -965,7 +965,7 @@ class StepSequencerComponent(CompoundComponent):
 		self._note_editor.set_key_indexes(keys)
 		self._note_editor.set_key_index_is_in_scale(key_is_in_scale)
 		self._note_editor.set_key_index_is_root_note(key_is_root_note)
-		self._note_editor.update()
+		self._update_note_editor()
 
 # UPDATE
 	def update(self):
@@ -1196,7 +1196,7 @@ class StepSequencerComponent(CompoundComponent):
 				self._note_editor.set_note_cache(self._note_cache)
 				self._note_selector.set_note_cache(self._note_cache)
 				self._loop_selector.set_note_cache(self._note_cache)
-				self._note_editor.update()
+				self._update_note_editor()
 
 # PLAY POSITION
 	def _on_playing_status_changed(self):  # playing status changed listener
@@ -1419,7 +1419,7 @@ class StepSequencerComponent(CompoundComponent):
 		if self._note_selector != None:
 			self._note_selector.update()
 		if self._note_editor != None:
-			self._note_editor.update()
+			self._update_note_editor()
 		
 # LOCK Button
 
