@@ -13,7 +13,7 @@ from _Framework.InputControlElement import MIDI_NOTE_TYPE, MIDI_CC_TYPE
 from _Framework.ComboElement import ComboElement
 from _Framework.ButtonMatrixElement import ButtonMatrixElement
 from .Colors import CLIP_COLOR_TABLE, RGB_COLOR_TABLE
-from .SkinDefault import make_default_skin
+from .SkinMK2 import make_skin
 from .SpecialMidiMap import SpecialMidiMap, make_button, make_multi_button, make_slider
 from .BackgroundComponent import ModifierBackgroundComponent, BackgroundComponent
 from .ActionsComponent import ActionsComponent
@@ -166,7 +166,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self.set_enabled(False)
 		self._challenge = Live.Application.get_random_int(0, 400000000) & 2139062143
 		with self.component_guard():
-			self._skin = make_default_skin()
+			self._skin = make_skin()
 			with inject(skin=const(self._skin)).everywhere():
 				self._midimap = MidiMap()
 			self._target_track_component = TargetTrackComponent(name='Target_Track')
@@ -958,7 +958,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	@subject_slot('session_record')
 	def _on_session_record_changed(self):
 		status = self.song().session_record
-		feedback_color = int(self._skin['Instrument.FeedbackRecord'] if status else self._skin['Instrument.Feedback'])
+		feedback_color = int(self._skin['Note.FeedbackRecord'] if status else self._skin['Note.Feedback'])
 		self._c_instance.set_feedback_velocity(feedback_color)
 
 	def _clear_send_cache(self):

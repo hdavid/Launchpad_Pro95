@@ -203,7 +203,7 @@ class InstrumentComponent(ControlSurfaceComponent):
 
 	def _do_implicit_arm(self, arm = True):
 		if self._is_enabled:
-			if self._implicit_arm:
+			if self._implicit_arm and arm:
 				self._control_surface.set_feedback_channels(self._feedback_channels)
 				self._control_surface.set_controlled_track(self._control_surface._target_track_component.target_track)
 			else:
@@ -345,11 +345,6 @@ class CommonModeComponent(ControlSurfaceComponent):
 			return None
 	
 		
-	#def tuple_idx(self, tuple, obj):
-	#	for i in xrange(0, len(tuple)):
-	#		if (tuple[i] == obj):
-	#			return i
-	#	return(False)
 					
 	
 	

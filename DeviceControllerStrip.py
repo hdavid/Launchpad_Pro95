@@ -19,12 +19,13 @@ SLIDER_MODE_BIG_ENUM = 5
 class DeviceControllerStrip(ButtonSliderElement):
 
 
-	def __init__(self, buttons, control_surface):
+	def __init__(self, buttons, control_surface, parent = None):
 		ButtonSliderElement.__init__(self, buttons)
+		self._control_surface = control_surface
+		self._parent = parent
 		self._num_buttons = len(buttons)
 		self._value_map = tuple([float(index) / (self._num_buttons-1) for index in range(self._num_buttons)])
 		self._precision_mode = False
-		self._control_surface = control_surface
 		self._enabled = True
 	
 	def set_enabled(self,enabled):
@@ -237,7 +238,11 @@ class DeviceControllerStrip(ButtonSliderElement):
 				
 				
 			self.notify_value(value)
+			if self._parent is not None:
+				self._parent._update_OSD()
 
 	def _on_parameter_changed(self):
 		assert (self._parameter_to_map_to != None)
+		if self._parent is not None:
+			self._parent._update_OSD()
 		self.update()

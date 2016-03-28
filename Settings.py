@@ -1,30 +1,29 @@
-# -*- coding: utf-8 -*-
-
-# Add Stop buttons at the bottom of the Session
-SESSION__STOP_BUTTONS = False
+# Add Stop buttons at the bottom of the Session. Experimental
+#SESSION__STOP_BUTTONS = True
 
 # Link sessions between multiple launchpad95. Experimental
-SESSION__LINK = False 
+#SESSION__LINK = True 
 
 # Link stepseq to follow session. Experimental
-STEPSEQ__LINK_WITH_SESSION = False
+#STEPSEQ__LINK_WITH_SESSION = True
 
 # configure what user modes buttons do.
 # the 3 first value configure the 3 sub modes of button user mode 1, 
 # and following ones are for user mode 2 button
-USER_MODES = ["instrument", "device", "user 1", "drum stepseq", "melodic stepseq", "user 2"]
+USER_MODES = [
+		"instrument", "device", "user 1",
+		 "drum stepseq", "melodic stepseq", "user 2"
+]
 
 # allow sep seq and instrument modes to save their scale settings.
 # as live does not offer any api we are stuck with using the track or clip name...
-# possible values : "clip" to save in clip, None (case matter)
+# possible values : "clip" to save in clip, set, None,  (case matter)
+# Experimental
 #STEPSEQ__SAVE_SCALE = "clip"
 #INSTRUMENT__SAVE_SCALE = "clip"
 STEPSEQ__SAVE_SCALE = None
 INSTRUMENT__SAVE_SCALE = None
 
-DEVICE = "launchpad"
-# uncomment the line below to enable launchpad mk2 mode
-#DEVICE = "launchpad mk2"
 
 
 

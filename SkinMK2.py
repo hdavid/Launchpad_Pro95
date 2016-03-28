@@ -1,31 +1,92 @@
-#Embedded file name: /Users/versonator/Jenkins/live/output/mac_64_static/Release/midi-remote-scripts/Launchpad_Pro/SkinDefault.py
 from _Framework.Skin import Skin
 from .Colors import Rgb
 from _Framework.ButtonElement import Color
 
 class Colors:
-
+	
 	class DefaultButton:
 		On = Rgb.GREEN
 		Off = Rgb.GREEN_HALF
 		Disabled = Rgb.BLACK
 
+	class Mode: #mode buttons colour
+		class Session:
+			On = Rgb.GREEN
+			Off = Rgb.GREEN_HALF
+		class Note:
+			On = Rgb.LIGHT_BLUE
+			Off = Rgb.LIGHT_BLUE_HALF
+		class Drum:
+			On = Rgb.YELLOW
+			Off = Rgb.YELLOW_HALF
+		class Device:
+			On = Rgb.PURPLE
+			Off = Rgb.PURPLE_HALF
+		class StepSequencer:
+			On = Rgb.MINT
+			Off = Rgb.MINT_HALF
+		class StepSequencer2:
+			On = Rgb.ORANGE
+			Off = Rgb.ORANGE_HALF
+		class User:
+			On = Rgb.DARK_BLUE
+			Off = Rgb.DARK_BLUE_HALF
+		class RecordArm:
+			On = Rgb.RED
+			Off = Rgb.RED_HALF
+		class TrackSelect:
+			On = Rgb.LIGHT_BLUE
+			Off = Rgb.LIGHT_BLUE_HALF
+		class Mute:
+			On = Rgb.YELLOW
+			Off = Rgb.YELLOW_HALF
+		class Solo:
+			On = Rgb.BLUE
+			Off = Rgb.BLUE_HALF
+		class Volume:
+			On = Rgb.GREEN
+			Off = Rgb.GREEN_HALF
+		class Pan:
+			On = Rgb.ORANGE
+			Off = Rgb.ORANGE_HALF
+		class Sends:
+			On = Rgb.WHITE
+			Off = Rgb.DARK_GREY
+		class StopClip:
+			On = Rgb.RED
+			Off = Rgb.RED_HALF
+
+	class Scrolling:
+		Enabled = Rgb.YELLOW_HALF
+		Pressed = Rgb.YELLOW
+		Disabled = Rgb.BLACK
+
+	class Misc:
+		UserMode = Rgb.DARK_BLUE
+		Shift = Rgb.DARK_GREY
+		ShiftOn = Rgb.WHITE
+		
 	class Session:
+		#scene
 		SceneTriggered = Rgb.GREEN_BLINK
+		Scene = Rgb.GREEN
 		NoScene = Rgb.BLACK
+		#clip states
 		ClipStarted = Rgb.GREEN_PULSE
+		StoppedClip = Rgb.RED_HALF
 		ClipRecording = Rgb.RED_PULSE
+		ClipEmpty = Rgb.BLACK
+		#trigs
 		ClipTriggeredPlay = Rgb.GREEN_BLINK
 		ClipTriggeredRecord = Rgb.RED_BLINK
-		ClipEmpty = Rgb.BLACK
 		RecordButton = Rgb.RED_HALF
+		#stop button
 		StopClip = Rgb.RED
 		StopClipTriggered = Rgb.RED_BLINK
-		StoppedClip = Rgb.RED_HALF
 		Enabled = Rgb.GREEN
 		Off = Rgb.GREEN_HALF
 
-	class Zooming:
+	class Zooming:#session zoomin
 		Selected = Rgb.AMBER
 		Stopped = Rgb.RED
 		Playing = Rgb.GREEN
@@ -62,7 +123,7 @@ class Colors:
 		H = Rgb.RED
 		HAvail = Rgb.RED_HALF
 
-	class Device:
+	class Device:#device mode colours
 		class Bank:
 			On = Rgb.BLUE
 			Off = Rgb.BLUE_HALF
@@ -166,7 +227,30 @@ class Colors:
 		On = Rgb.RED
 		Off = Rgb.RED_HALF
 		Transition = Rgb.RED_BLINK
-
+		
+	class TrackController:
+		class Recording:
+			On = Rgb.RED
+			Off = Rgb.RED_HALF
+		class ImplicitRecording:
+			On = Rgb.RED
+			Off = Rgb.RED_HALF
+		class Play:
+			On = Rgb.RED
+			Off = Rgb.RED_HALF
+		class Stop:
+			On = Rgb.RED
+			Off = Rgb.RED_HALF
+		class Mute:
+			On = Rgb.RED
+			Off = Rgb.RED_HALF
+		class Undo:
+			On = Rgb.RED
+			Off = Rgb.RED_HALF
+		class Solo:
+			On = Rgb.AMBER
+			Off = Rgb.AMBER_HALF
+				
 	class DrumGroup:
 		PadEmpty = Rgb.BLACK
 		PadFilled = Rgb.YELLOW
@@ -184,114 +268,71 @@ class Colors:
 		class Solo:
 			On = Rgb.BLUE
 			Off = Rgb.DARK_BLUE
-	class Instrument:
+			
+	class Note:
 		FeedbackRecord = Rgb.RED
 		Feedback = Rgb.GREEN
-		
-		class Note:
+		class Octave:
+			On = Rgb.GREEN
+			Off = Rgb.GREEN_HALF
+		class Scale:
+			On = Rgb.AMBER
+			Off = Rgb.AMBER_HALF
+		class Pads:
 			Root = Rgb.BLUE
 			InScale = Rgb.LIGHT_BLUE_HALF
 			Highlight = Rgb.LIGHT_BLUE
 			OutOfScale = Rgb.BLACK
 			Invalid = Rgb.BLACK
-			
-	class Scale:
-		AbsoluteRoot = Rgb.RED
-		RelativeRoot = Rgb.RED_HALF
-		RelativeScale = Rgb.BLUE_HALF
-		CircleOfFifths = Rgb.BLUE_HALF
-		class QuickScale:
+					
+	class Scale:#scale edition
+		class AbsoluteRoot:
 			On = Rgb.RED
 			Off = Rgb.RED_HALF
 		class Mode:
 			On = Rgb.RED
 			Off = Rgb.RED_HALF
+		class Key:		
+			On = Rgb.GREEN
+			Off = Rgb.GREEN_HALF
+		CircleOfFifths = Rgb.BLUE
+		RelativeScale = Rgb.BLUE
 		class Octave:
 			On = Rgb.RED
 			Off = Rgb.RED_HALF
 		class Modus:
 			On = Rgb.BLUE
 			Off = Rgb.BLUE_HALF
-		class Key:		
-			On = Rgb.GREEN
-			Off = Rgb.GREEN_HALF
-
-	class Mode:
-
-		class Session:
-			On = Rgb.GREEN
-			Off = Rgb.GREEN_HALF
-
-		class Chromatic:
-			On = Rgb.LIGHT_BLUE
-			Off = Rgb.LIGHT_BLUE_HALF
-
-		class Note:
-			On = Rgb.LIGHT_BLUE
-			Off = Rgb.LIGHT_BLUE_HALF
-
-		class Drum:
-			On = Rgb.YELLOW
-			Off = Rgb.YELLOW_HALF
-
-		class Device:
-			On = Rgb.PURPLE
-			Off = Rgb.PURPLE_HALF
+		class QuickScale:
+			On = Rgb.AMBER
+			Off = Rgb.AMBER_HALF
 		
-		class StepSequencer:
-			On = Rgb.MINT
-			Off = Rgb.MINT_HALF
-			
-		class StepSequencer2:
-			On = Rgb.ORANGE
-			Off = Rgb.ORANGE_HALF
-			
-		class User:
-			On = Rgb.DARK_BLUE
-			Off = Rgb.DARK_BLUE_HALF
+	class QuickScale:#quick scale on top of instrument mode
+		class Modus:
+			On = Rgb.AMBER
+			Off = Rgb.AMBER_HALF
+		class Major: # quick scale while in major mode
+			class Key:
+				On = Rgb.AMBER
+				Off = Rgb.AMBER_HALF
+			CircleOfFifths = Rgb.RED
+			RelativeScale = Rgb.RED
+			Mode = Rgb.GREEN
+		class Minor:
+			class Key:
+				On = Rgb.RED
+				Off = Rgb.RED_HALF
+			CircleOfFifths = Rgb.AMBER
+			RelativeScale = Rgb.AMBER
+			Mode = Rgb.GREEN
+		class Other:
+			class Key:
+				On = Rgb.GREEN
+				Off = Rgb.GREEN_HALF
+			CircleOfFifths = Rgb.RED
+			RelativeScale = Rgb.RED
+			Mode = Rgb.GREEN
+		
 
-		class RecordArm:
-			On = Rgb.RED
-			Off = Rgb.RED_HALF
-
-		class TrackSelect:
-			On = Rgb.LIGHT_BLUE
-			Off = Rgb.LIGHT_BLUE_HALF
-
-		class Mute:
-			On = Rgb.YELLOW
-			Off = Rgb.YELLOW_HALF
-
-		class Solo:
-			On = Rgb.BLUE
-			Off = Rgb.BLUE_HALF
-
-		class Volume:
-			On = Rgb.GREEN
-			Off = Rgb.GREEN_HALF
-
-		class Pan:
-			On = Rgb.ORANGE
-			Off = Rgb.ORANGE_HALF
-
-		class Sends:
-			On = Rgb.WHITE
-			Off = Rgb.DARK_GREY
-
-		class StopClip:
-			On = Rgb.RED
-			Off = Rgb.RED_HALF
-
-	class Scrolling:
-		Enabled = Rgb.YELLOW_HALF
-		Pressed = Rgb.YELLOW
-		Disabled = Rgb.BLACK
-
-	class Misc:
-		UserMode = Rgb.DARK_BLUE
-		Shift = Rgb.DARK_GREY
-		ShiftOn = Rgb.WHITE
-
-
-def make_default_skin():
+def make_skin():
 	return Skin(Colors)

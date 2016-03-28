@@ -1,5 +1,5 @@
 from _Framework.Skin import SkinColorMissingError
-from _Framework.ButtonElement import ButtonElement, ON_VALUE, OFF_VALUE
+from _Framework.ButtonElement import ButtonElement, ON_VALUE, OFF_VALUE, ButtonValue
 
 class ConfigurableButtonElement(ButtonElement):
 	"""
@@ -13,8 +13,9 @@ class ConfigurableButtonElement(ButtonElement):
 	default_states = {True: 'DefaultButton.On', False: 'DefaultButton.Disabled'}
 	send_depends_on_forwarding = False
 
-	def __init__(self, is_momentary, msg_type, channel, identifier, skin = None, default_states = None, *a, **k):
-		super(ConfigurableButtonElement, self).__init__(is_momentary, msg_type, channel, identifier, skin=skin, **k)
+	def __init__(self, is_momentary, msg_type, channel, identifier, skin = None, default_states = None, control_surface = None, *a, **k):
+		self._control_surface = control_surface
+		super(ConfigurableButtonElement, self).__init__(is_momentary, msg_type, channel, identifier, skin = skin, **k)
 		if default_states is not None:
 			self.default_states = default_states
 		self.states = dict(self.default_states)
@@ -50,9 +51,13 @@ class ConfigurableButtonElement(ButtonElement):
 		super(ConfigurableButtonElement, self).reset_state()
 		self.set_enabled(True)
 
-	def set_on_off_values(self, on_value, off_value):
-		self.states[True] = on_value
-		self.states[False] = off_value
+	def set_on_off_values(self, on_value, off_value = None):
+		if off_value == None:
+			self.states[True] = str(on_value)+".On"
+			self.states[False] = str(on_value)+".Off"
+		else:
+			self.states[True] = on_value
+			self.states[False] = off_value
 
 	def set_enabled(self, enabled):
 		self.suppress_script_forwarding = not enabled
@@ -61,21 +66,44 @@ class ConfigurableButtonElement(ButtonElement):
 		return not self.suppress_script_forwarding
 
 	def set_light(self, value):
-		super(ConfigurableButtonElement, self).set_light(self.states.get(value, value))
+		try:
+			self._draw_skin(value)
+		except SkinColorMissingError:
+			super(ButtonElement, self).set_light(value)
 
 	def send_value(self, value, **k):
 		if value is ON_VALUE:
-			self._do_send_on_value()
+			self._do_send_on_value(**k)
 		elif value is OFF_VALUE:
-			self._do_send_off_value()
-		else:
+			self._do_send_off_value(**k)
+		elif type(value) is int:
 			super(ConfigurableButtonElement, self).send_value(value, **k)
+		else:
+			self._draw_skin(value)
+ 	
+	def force_next_send(self):
+		"""
+		Enforces sending the next value regardless of wether the
+		control is mapped to the script.
+		"""
+		self._force_next_send = True
+		self.clear_send_cache()
+		
+		
+	def _do_send_on_value(self, **k):
+		if type(self._on_value) is int:
+			super(ConfigurableButtonElement, self).send_value(self._on_value, **k)
+		else:
+			self._draw_skin(self._on_value)
 
-	def _do_send_on_value(self):
-		self._skin[self._on_value].draw(self)
+	def _do_send_off_value(self, **k):
+		if type(self._off_value) is int:
+			super(ConfigurableButtonElement, self).send_value(self._off_value, **k)
+		else:
+			self._draw_skin(self._off_value)
 
-	def _do_send_off_value(self):
-		self._skin[self._off_value].draw(self)
-
+	def _draw_skin(self, value):
+		self._skin[value].draw(self)
+		
 	def script_wants_forwarding(self):
 		return not self.suppress_script_forwarding

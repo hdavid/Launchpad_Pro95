@@ -7,11 +7,6 @@ from .consts import ACTION_BUTTON_COLORS
 
 class NoteComponent(ControlSurfaceComponent):
 	
-	#mute_button = ButtonControl(**ACTION_BUTTON_COLORS)
-	#solo_button = ButtonControl(**ACTION_BUTTON_COLORS)
-	
-	#scene_buttons = control_matrix(PlayableControl)
-	
 	matrix = control_matrix(PlayableControl)
 
 	def __init__(self, control_surface = None, feedback_channels = [0,1,2], non_feedback_channel = 15, get_pattern = None, *a, **k):
@@ -34,15 +29,15 @@ class NoteComponent(ControlSurfaceComponent):
 			note_info = pattern.note(col, max_j - row)
 			if note_info.index != None and note_info.index<128:
 				if note_info.root:
-					button.color = "Instrument.Note.Root"
+					button.color = "Note.Pads.Root"
 				elif note_info.highlight:
-					button.color = "Instrument.Note.Highlight"
+					button.color = "Note.Pads.Highlight"
 				elif note_info.in_scale:
-					button.color = "Instrument.Note.InScale"
+					button.color = "Note.Pads.InScale"
 				elif not note_info.valid:
-					button.color = "Instrument.Note.OutOfScale"
+					button.color = "Note.Pads.OutOfScale"
 				else:
-					button.color = "Instrument.Note.Invalid"
+					button.color = "Note.Pads.Invalid"
 				button.identifier = note_info.index
 				button.channel = self._feedback_channels[note_channel[note_info.index]]
 				button.set_playable(not playable)
@@ -51,7 +46,7 @@ class NoteComponent(ControlSurfaceComponent):
 				button.identifier = lala
 				lala = lala + 1
 				button.channel = self._non_feedback_channel
-				button.color = "Instrument.Note.Invalid"
+				button.color = "Note.Pads.Invalid"
 				button.set_playable(False)
 			
 			

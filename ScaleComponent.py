@@ -1,8 +1,6 @@
 from _Framework.ControlSurfaceComponent import ControlSurfaceComponent
 from _Framework.ToggleComponent import ToggleComponent
-from _Framework.Control import PlayableControl, ButtonControl, ToggleButtonControl, control_matrix
-from .consts import ACTION_BUTTON_COLORS
-import string
+#from _Framework.Control import PlayableControl, ButtonControl, ToggleButtonControl, control_matrix
 
 KEY_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 CIRCLE_OF_FIFTHS = [7 * k % 12 for k in range(12)]
@@ -43,14 +41,14 @@ MUSICAL_MODES = [
 
 class ScaleComponent(ControlSurfaceComponent):
 	
-	matrix = control_matrix(PlayableControl)
+	#matrix = control_matrix(PlayableControl)
 
 	def __init__(self, control_surface = None, enabled = False, mode = "diatonic", *a, **k):
 		self._layout_set = False
 		self._modus_list = [Modus(MUSICAL_MODES[v], MUSICAL_MODES[v + 1]) for v in xrange(0, len(MUSICAL_MODES), 2)]
 		self._modus_names = [MUSICAL_MODES[v] for v in xrange(0, len(MUSICAL_MODES), 2)]
 		self._control_surface = control_surface
-		
+		self._osd = None
 		self._modus = 0
 		self._key = 0
 		self._octave = 3 
@@ -58,8 +56,9 @@ class ScaleComponent(ControlSurfaceComponent):
 		self._is_drumrack = False
 		self._quick_scale = False
 		self._is_horizontal = True
-		self._is_absolute = True
+		self._is_absolute = False
 		self._interval = 3
+		self._matrix = None
 		
 		# C  D  E  F  G  A  B
 		self._white_notes_index = [0, 2, 4, 5, 7, 9, 11]
@@ -78,159 +77,204 @@ class ScaleComponent(ControlSurfaceComponent):
 	def modus(self):
 		return self._modus_list[self._modus]
 
-	def set_key(self, key):
+	def set_key(self, key, message = True):
 		if key>=0 and key<=11:
 			self._key = key % 12
-			self._control_surface.show_message(str("selected key: " + KEY_NAMES[key]))
+			if message:
+				self._control_surface.show_message(str("selected key: " + KEY_NAMES[self._key])+" "+str(self._modus_names[self._modus]))
 		
-	def set_octave(self, octave):
+	def set_octave(self, octave, message = True):
 		if octave>=0 and octave<=7:
 			self._octave = octave
-			self._control_surface.show_message("selected octave: " + str(octave))
+			if message:
+				self._control_surface.show_message("selected octave: " + str(octave))
 
-	def octave_up(self):
-		self.set_octave(self._octave + 1) 
+	def octave_up(self, message = True):
+		self.set_octave(self._octave + 1, message) 
 	
-	def octave_down(self):
-		self.set_octave(self._octave - 1) 
+	def octave_down(self, message = True):
+		self.set_octave(self._octave - 1, message) 
 		
-	def set_modus(self, index):
+	def set_modus(self, index, message = True):
 		if index > -1 and index < len(self._modus_list):
 			self._modus = index
-			self._control_surface.show_message(str("selected scale: " + self._modus_names[index]))
-
+			if message:
+				self._control_surface.show_message(str("selected scale: " + KEY_NAMES[self._key])+" "+str(self._modus_names[self._modus]))
+	
+	def set_drumrack(self, drumrack):
+		self._is_drumrack = drumrack
 		
+	#def set_matrix(self, matrix):
+	#	if not matrix or not self._layout_set:
+	#		self._matrix = matrix
+	#		#self._matrix.set_control_element(matrix)
+	#		for index, button in enumerate(self._matrix):
+	#			#button.set_playable(False)
+	#			self._layout_set = bool(matrix)
+	#		self.update()
 	def set_matrix(self, matrix):
-		if not matrix or not self._layout_set:
-			self.matrix.set_control_element(matrix)
-			for index, button in enumerate(self.matrix):
-				button.set_playable(False)
-				self._layout_set = bool(matrix)
-			self.update()
+		self._matrix = matrix
+		if matrix:
+			matrix.reset()
+		if (matrix != self._matrix):
+			if (self._matrix != None):
+				self._matrix.remove_value_listener(self._matrix_pressed)
+		self._matrix = matrix
+		if (self._matrix != None):
+			self._matrix.add_value_listener(self._matrix_pressed)
+		self.update()
+
 
 	
+	def set_osd(self, osd):
+		self._osd = osd
+
+	def _update_OSD(self):
+		if self._osd != None:
+			self._osd.attributes[0] = ""
+			self._osd.attribute_names[0] = ""
+			self._osd.attributes[1] = MUSICAL_MODES[self._modus * 2]
+			self._osd.attribute_names[1] = "Scale"
+			self._osd.attributes[2] = KEY_NAMES[self._key % 12]
+			self._osd.attribute_names[2] = "Root Note"
+			self._osd.attributes[3] = self._octave
+			self._osd.attribute_names[3] = "Octave"
+			self._osd.attributes[4] = " "
+			self._osd.attribute_names[4] = " "
+			self._osd.attributes[5] = " "
+			self._osd.attribute_names[5] = " "
+			self._osd.attributes[6] = " "
+			self._osd.attribute_names[6] = " "
+			self._osd.attributes[7] = " "
+			self._osd.attribute_names[7] = " "
+			self._osd.update()
+			
 	def update(self):
-		if self.is_enabled() and self.matrix!=None:
-			#self._control_surface.log_message("update scale: "+str(self.matrix))
+		if self.is_enabled() and self._matrix!=None:
+			#self._control_surface.log_message("update scale: "+str(self._matrix))
 			super(ScaleComponent, self).update()
-			for index, button in enumerate(self.matrix):
-				row, col = button.coordinate
+			self._update_OSD()
+			#for index, button in enumerate(self._matrix):
+			for button, (col, row) in self._matrix.iterbuttons():
+				#row, col = button.coordinate
+				button.set_enabled(True)
 				if row==0:
 					if col == 0:
 						if self._is_absolute:
-							button.color = "Scale.AbsoluteRoot"
+							button.set_light("Scale.AbsoluteRoot")
 						else:
-							button.color = "Scale.RelativeRoot"
+							button.set_light("Scale.RelativeRoot")
 					elif col == 1:
-						button.color = "DefaultButton.Disabled"
+						button.set_light("DefaultButton.Disabled")
 					elif col == 2:
 						if not self.is_drumrack and self._mode == "chromatic_gtr":
-							button.color = "Scale.Mode.On"
+							button.set_light("Scale.Mode.On")
 						else:
-							button.color = "Scale.Mode.Off"
+							button.set_light("Scale.Mode.Off")
+						button.turn_on()
 					elif col == 3:
 						if not self.is_drumrack and self._mode == "diatonic_ns":
-							button.color = "Scale.Mode.On"
+							button.set_light("Scale.Mode.On")
 						else:
-							button.color = "Scale.Mode.Off"
+							button.set_light("Scale.Mode.Off")
 					elif col == 4:
 						if not self.is_drumrack and self._mode == "diatonic_chords":
-							button.color = "Scale.Mode.On"
+							button.set_light("Scale.Mode.On")
 						else:
-							button.color = "Scale.Mode.Off"
+							button.set_light("Scale.Mode.Off")
 					elif col == 5:
 						if not self.is_drumrack and self._mode == "diatonic":
-							button.color = "Scale.Mode.On"
+							button.set_light("Scale.Mode.On")
 						else:
-							button.color = "Scale.Mode.Off"
+							button.set_light("Scale.Mode.Off")
 					elif col == 6:
 						if not self.is_drumrack and self._mode == "chromatic":
-							button.color = "Scale.Mode.On"
+							button.set_light("Scale.Mode.On")
 						else:
-							button.color = "Scale.Mode.Off"
+							button.set_light("Scale.Mode.Off")
 					elif col == 7:
 						if self.is_drumrack:
-							button.color = "Scale.Mode.On"
+							button.set_light("Scale.Mode.On")
 						else:
-							button.color = "Scale.Mode.Off"
+							button.set_light("Scale.Mode.Off")
 				
 				elif row==1:
 					if self.is_drumrack:
-						button.color = "DefaultButton.Disabled"
+						button.set_light("DefaultButton.Disabled")
 					else:
 						if col==0 or col==1 or col==3 or col==4 or col==5:
 							if self._key == self._white_notes_index[col]+1:
-								button.color = "Scale.Key.On"
+								button.set_light("Scale.Key.On")
 							else:
-								 button.color = "Scale.Key.Off"
+								 button.set_light("Scale.Key.Off")
 						elif col==2:
-							button.color = "Scale.RelativeScale"
+							button.set_light("Scale.RelativeScale")
 						elif col==6:
-							button.color = "Scale.CircleOfFifths"	
+							button.set_light("Scale.CircleOfFifths")
 						elif col==7:
 							if self._quick_scale:
-								button.color = "Scale.QuickScale.On"
+								button.set_light("Scale.QuickScale.On")
 							else:
-								button.color = "Scale.QuickScale.Off"
+								button.set_light("Scale.QuickScale.Off")
 				elif row==2:
 					if self.is_drumrack:
-						button.color = "DefaultButton.Disabled"
+						button.set_light("DefaultButton.Disabled")
 					else:
 						if col<7:
 							if self._key == self._white_notes_index[col]:
-								button.color = "Scale.Key.On"
+								button.set_light("Scale.Key.On")
 							else:
-								 button.color = "Scale.Key.Off"
+								 button.set_light("Scale.Key.Off")
 						else:
-							button.color = "Scale.CircleOfFifths"	
+							button.set_light("Scale.CircleOfFifths")
 				elif row==3:
 					if self._octave == col:
-						button.color = "Scale.Octave.On"
+						button.set_light("Scale.Octave.On")
 					else:
-						button.color = "Scale.Octave.Off"
+						button.set_light("Scale.Octave.Off")
 				elif row==4:
 					if self.is_drumrack:
-						button.color = "DefaultButton.Disabled"
+						button.set_light("DefaultButton.Disabled")
 					else:
 						if self._modus == col:
-							button.color = "Scale.Modus.On"
+							button.set_light("Scale.Modus.On")
 						else:
-							button.color = "Scale.Modus.Off"
+							button.set_light("Scale.Modus.Off")
 				elif row==5:
 					if self.is_drumrack:
-						button.color = "DefaultButton.Disabled"
+						button.set_light("DefaultButton.Disabled")
 					else:
 						if self._modus == col+8:
-							button.color = "Scale.Modus.On"
+							button.set_light("Scale.Modus.On")
 						else:
-							button.color = "Scale.Modus.Off"
+							button.set_light("Scale.Modus.Off")
 				elif row==6:
 					if self.is_drumrack:
-						button.color = "DefaultButton.Disabled"
+						button.set_light("DefaultButton.Disabled")
 					else:
 						if self._modus == col+16:
-							button.color = "Scale.Modus.On"
+							button.set_light("Scale.Modus.On")
 						else:
-							button.color = "Scale.Modus.Off"
+							button.set_light("Scale.Modus.Off")
 				elif row==7:
 					if self.is_drumrack:
-						button.color = "DefaultButton.Disabled"
+						button.set_light("DefaultButton.Disabled")
 					else:
 						if col+24>len(self._modus_list):
-							button.color = "DefaultButton.Disabled"
+							button.set_light("DefaultButton.Disabled")
 						elif self._modus == col+24:
-							button.color = "Scale.Modus.On"
+							button.set_light("Scale.Modus.On")
 						else:
-							button.color = "Scale.Modus.Off"
-				button.set_playable(False)
-				button.update()
+							button.set_light("Scale.Modus.Off")
+				#button.set_enabled(False)
+				#button.update()
 			
 		
 		
-	@matrix.pressed
-	def matrix_pressed(self, pad):
-		if self.is_enabled():
-		 	y, x = pad.coordinate
+	#@matrix.pressed
+	def _matrix_pressed(self, value, x, y, is_momentary):
+		if self.is_enabled() and value>0:
+		 	#y, x = pad.coordinate
 			# modes
 			if y == 0:
 				if not self.is_drumrack:
@@ -337,7 +381,7 @@ class ScaleComponent(ControlSurfaceComponent):
 				self._control_surface.show_message("mode : " + str(self._modus_names[self._modus]))
 			self.update()
 	
-	@matrix.released
+	#@matrix.released
 	def matrix_release(self, pad):
 		pass
 		# selected_drum_pad = self._coordinate_to_pad_map[pad.coordinate]
@@ -368,6 +412,10 @@ class ScaleComponent(ControlSurfaceComponent):
 	@property	
 	def is_chromatic_gtr(self):
 		return self._mode == "chromatic_gtr"
+		
+	@property
+	def is_quick_scale(self):
+		return self._quick_scale
 	
 	
 	def get_pattern(self):

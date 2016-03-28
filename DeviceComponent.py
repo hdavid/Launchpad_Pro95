@@ -12,11 +12,10 @@ class DeviceComponent(LiveDeviceComponent):
 	__module__ = __name__
 	__doc__ = ''
 
-
-	def __init__(self, control_surface= None, name = "device_component", is_enabled = False):
+	def __init__(self, control_surface = None, name = "device_component", is_enabled = False, matrix = None, side_buttons = None, top_buttons = None):
 		self._control_surface = control_surface
 		self.name = name
-		self._matrix = None
+		self._matrix = matrix
 		self._prev_track_button = None
 		self._next_track_button = None
 		self._prev_device_button = None
@@ -25,6 +24,7 @@ class DeviceComponent(LiveDeviceComponent):
 		self._next_bank_button = None
 		self._precision_button = None
 		self._precision_mode = False
+		self._remaining_buttons = None
 		self._device = None
 		self._lock_button_slots = [None,None,None,None]
 		self._lock_buttons = [None,None,None,None]
@@ -32,7 +32,8 @@ class DeviceComponent(LiveDeviceComponent):
 		self._locked_device_index = None
 		self._is_active = False
 		self._force = True
-		
+		self._osd = None
+
 		LiveDeviceComponent.__init__(self)
 
 		# Sliders
@@ -45,27 +46,35 @@ class DeviceComponent(LiveDeviceComponent):
 		self._locked_device_bank = [0 for index in range(4)]
 		self._lock_button_press = [0 for index in range(4)]
 		self._locked_devices = [None for index in range(4)]
+
+		if top_buttons != None:
+			# device selection buttons
+			self.set_prev_device_button(top_buttons[0])
+			self.set_next_device_button(top_buttons[1])
+			# track selection buttons
+			self.set_prev_track_button(top_buttons[2])
+			self.set_next_track_button(top_buttons[3])
+
+		if side_buttons != None:
+			# on/off button
+			self.set_on_off_button(side_buttons[0])
+
+			# bank nav buttons
+			self.set_bank_nav_buttons(side_buttons[1], side_buttons[2])
+			self._prev_bank_button = side_buttons[1]
+			self._next_bank_button = side_buttons[2]
+			# precision
+			self.set_precision_button(side_buttons[3])
 		
-
-		# device selection buttons
-		#self.set_prev_device_button(top_buttons[0])
-		#self.set_next_device_button(top_buttons[1])
-		# track selection buttons
-		#self.set_prev_track_button(top_buttons[2])
-		#self.set_next_track_button(top_buttons[3])
-
-		# on/off button
-		#self.set_on_off_button(side_buttons[0])
-
-		# bank nav buttons
-		#self.set_bank_nav_buttons(side_buttons[1], side_buttons[2])
-		#self._prev_bank_button = side_buttons[1]
-		#self._next_bank_button = side_buttons[2]
-		# precision
-		#self.set_precision_button(side_buttons[3])
+			# lock buttons
+			self.set_lock_button1(side_buttons[4])
+			self.set_lock_button2(side_buttons[5])
+			self.set_lock_button3(side_buttons[6])
+			self.set_lock_button4(side_buttons[7])
 		
-		# lock buttons
-		#self.set_lock_buttons([side_buttons[4],side_buttons[5],side_buttons[6],side_buttons[7]])
+		if matrix != None:
+			self.set_matrix(matrix)
+		
 		
 		# selected device listener
 		self.song().add_appointed_device_listener(self._on_device_changed)
@@ -93,6 +102,7 @@ class DeviceComponent(LiveDeviceComponent):
 		self._next_bank_button = None
 		self._precision_button = None
 		self._precision_mode = None
+		self._remaining_buttons = None
 		self._device = None
 
 	@property
@@ -109,6 +119,46 @@ class DeviceComponent(LiveDeviceComponent):
 		# ping parent
 		LiveDeviceComponent.set_enabled(self, active)
 
+	def set_osd(self, osd):
+		self._osd = osd
+
+	def _update_OSD(self):
+		if self._osd != None:
+			self._osd.mode = "Device Controller"
+			i = 0
+			for slider in self._parameter_controls:
+				if slider._parameter_to_map_to != None:
+					self._osd.attribute_names[i] = str(slider._parameter_to_map_to.name)
+					try:
+						self._osd.attributes[i] = str(slider._parameter_to_map_to)
+					except:
+						self._osd.attributes[i] = str(slider._parameter_to_map_to.value)
+				else:
+					self._osd.attribute_names[i] = " "
+					self._osd.attributes[i] = " "
+				i += 1
+
+			if self._selected_track != None:
+				if self._locked_to_device2:
+					if self._device != None:
+						self._osd.info[0] = "track : " + self.get_device_track_name(self._device) + " (locked)"
+					else:
+						self._osd.info[0] = "track : " + self._selected_track.name
+				else:
+					self._osd.info[0] = "track : " + self._selected_track.name
+			else:
+				self._osd.info[0] = " "
+			if self._device != None:
+				name = self._device.name
+				if name == "":
+					name = "(unamed device)"
+				if self._locked_to_device2:
+					self._osd.info[1] = "device : " + name + " (locked)"
+				else:
+					self._osd.info[1] = "device : " + name
+			else:
+				self._osd.info[1] = "no device selected"
+			self._osd.update()
 
 # DEVICE SELECTION
 
@@ -180,6 +230,7 @@ class DeviceComponent(LiveDeviceComponent):
 			self.update_lock_buttons()
 			self.update_on_off_button()
 			self.update_precision_button()
+			self._update_OSD()
 			self._force = False
 
 	def set_prev_bank_button(self, button):
@@ -275,6 +326,7 @@ class DeviceComponent(LiveDeviceComponent):
 						self.update()
 			self.update_track_buttons()
 			self.update_device_buttons()
+			self._update_OSD()
 			if self._locked_to_device2:
 				self.on_selected_track_changed()		
 			self.update_lock_buttons()
