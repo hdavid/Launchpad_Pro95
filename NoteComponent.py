@@ -34,7 +34,7 @@ class NoteComponent(ControlSurfaceComponent):
 					button.color = "Note.Pads.Highlight"
 				elif note_info.in_scale:
 					button.color = "Note.Pads.InScale"
-				elif not note_info.valid:
+				elif note_info.valid:
 					button.color = "Note.Pads.OutOfScale"
 				else:
 					button.color = "Note.Pads.Invalid"

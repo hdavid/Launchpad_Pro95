@@ -90,7 +90,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 
 	@property
 	def is_drumrack(self):
-		return self._stepsequencer._scale_component.is_drumrack and self._drum_group_device != None
+		return self._stepsequencer._scale_component.is_drumrack# and self._drum_group_device != None
 
 	@property
 	def is_chromatic(self):
@@ -199,7 +199,7 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 					self._offset = self._buttons.index(sender)
 				except ValueError:
 					self._offset = -1
-				if self.is_drumrack:
+				if self.is_drumrack and self._drum_group_device!=None:
 					self._drum_group_device.view.selected_drum_pad = self._drum_group_device.drum_pads[self.selected_note]
 				self.update()
 				self._stepsequencer._scale_updated()
@@ -229,17 +229,23 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 					self._buttons[i].turn_off()
 				else:
 					note = self._root_note + i
-
 					if self.is_drumrack:
-						if self._drum_group_device.drum_pads[note].chains:
+						if self._drum_group_device==None:
 							self._buttons[i].set_on_off_values("DrumGroup.PadSelected","DrumGroup.PadFilled")
 						else:
-							self._buttons[i].set_on_off_values("DrumGroup.PadEmpty", "DrumGroup.PadEmpty")
+							if self._drum_group_device.drum_pads[note].chains:
+								self._buttons[i].set_on_off_values("DrumGroup.PadSelected","DrumGroup.PadFilled")
+							else:
+								self._buttons[i].set_on_off_values("DrumGroup.PadSelected", "DrumGroup.PadEmpty")
 					else:
-						if self._scale != None and i % 12 in self._scale:
+						if i % 12 == self._scale[0]:
 							self._buttons[i].set_on_off_values("StepSequencer.NoteSelector.Selected", "Note.Pads.Root")
-						else:
+						elif i % 12 == self._scale[2] or i % 12 == self._scale[4]:
+							self._buttons[i].set_on_off_values("StepSequencer.NoteSelector.Selected", "Note.Pads.Highlight")
+						elif self._scale != None and i % 12 in self._scale:
 							self._buttons[i].set_on_off_values("StepSequencer.NoteSelector.Selected", "Note.Pads.InScale")
+						else:
+							self._buttons[i].set_on_off_values("StepSequencer.NoteSelector.Selected", "Note.Pads.OutOfScale")
 
 					if self._is_velocity_shifted and not self._stepsequencer._is_locked:
 						self._buttons[i].force_next_send()
@@ -594,7 +600,7 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 							if selected:
 								self._cache[i] = "StepSequencer.LoopSelector.SelectedPlaying"
 							else:
-								self._cache[i] = "StepSequencer.NoteSelector.Playing"
+								self._cache[i] = "StepSequencer.LoopSelector.Playing"
 						else:
 							if selected:
 								self._cache[i] = "StepSequencer.LoopSelector.Selected"
@@ -605,7 +611,7 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 							if selected:
 								self._cache[i] = "StepSequencer.LoopSelector.SelectedPlaying"
 							else:
-								self._cache[i] = "StepSequencer.NoteSelector.Playing"
+								self._cache[i] = "StepSequencer.LoopSelector.Playing"
 						else:
 							if selected:
 								self._cache[i] = "StepSequencer.LoopSelector.Selected"

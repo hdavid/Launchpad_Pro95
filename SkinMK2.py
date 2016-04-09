@@ -73,7 +73,7 @@ class Colors:
 		NoScene = Rgb.BLACK
 		#clip states
 		ClipStarted = Rgb.GREEN_PULSE
-		StoppedClip = Rgb.RED_HALF
+		ClipStopped = Rgb.RED_HALF
 		ClipRecording = Rgb.RED_PULSE
 		ClipEmpty = Rgb.BLACK
 		#trigs
@@ -170,7 +170,7 @@ class Colors:
 		class LoopSelector:
 			SelectedPlaying = Rgb.PURPLE
 			Playing = Rgb.PURPLE_HALF
-			Selected = Rgb.AMBER
+			Selected = Rgb.BLUE
 			InLoop = Rgb.BLUE_HALF
 		class Quantization:
 			One=Rgb.BLACK
@@ -181,7 +181,7 @@ class Colors:
 			class Octave:
 				On = Rgb.GREEN
 				Off = Rgb.GREEN_HALF
-			Selected = Rgb.ORANGE
+			Selected = Rgb.GREEN
 			Playing = Rgb.RED
 		class NoteEditor:
 			class VelocityShifted:
@@ -282,7 +282,7 @@ class Colors:
 			Root = Rgb.BLUE
 			InScale = Rgb.LIGHT_BLUE_HALF
 			Highlight = Rgb.LIGHT_BLUE
-			OutOfScale = Rgb.BLACK
+			OutOfScale = Rgb.DARK_GREY
 			Invalid = Rgb.BLACK
 					
 	class Scale:#scale edition
