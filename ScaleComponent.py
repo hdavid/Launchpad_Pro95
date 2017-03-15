@@ -55,6 +55,7 @@ class ScaleComponent(ControlSurfaceComponent):
 		self._mode = mode #chromatic, diatonic
 		self._is_drumrack = False
 		self._quick_scale = False
+		self._quick_keys = [True, True, True, True, True, True, True, True, True, True, True, True]
 		self._is_horizontal = True
 		self._is_absolute = False
 		self._interval = 3
@@ -203,10 +204,16 @@ class ScaleComponent(ControlSurfaceComponent):
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if col==0 or col==1 or col==3 or col==4 or col==5:
-							if self._key == self._white_notes_index[col]+1:
-								button.set_light("Scale.Key.On")
+							if self._quick_scale:
+								if self._quick_keys[self._white_notes_index[col]+1]:
+									button.set_light("Scale.Key.On")
+								else:
+									button.set_light("Scale.Key.Off")
 							else:
-								 button.set_light("Scale.Key.Off")
+								if self._key == self._white_notes_index[col]+1:
+									button.set_light("Scale.Key.On")
+								else:
+									button.set_light("Scale.Key.Off")
 						elif col==2:
 							button.set_light("Scale.RelativeScale")
 						elif col==6:
@@ -221,10 +228,16 @@ class ScaleComponent(ControlSurfaceComponent):
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if col<7:
-							if self._key == self._white_notes_index[col]:
-								button.set_light("Scale.Key.On")
+							if self._quick_scale:
+								if self._quick_keys[self._white_notes_index[col]]:
+									button.set_light("Scale.Key.On")
+								else:
+									button.set_light("Scale.Key.Off")
 							else:
-								 button.set_light("Scale.Key.Off")
+								if self._key == self._white_notes_index[col]:
+									button.set_light("Scale.Key.On")
+								else:
+									button.set_light("Scale.Key.Off")
 						else:
 							button.set_light("Scale.CircleOfFifths")
 				elif row==3:
@@ -327,10 +340,16 @@ class ScaleComponent(ControlSurfaceComponent):
 				selected_key = self._key
 				selected_modus = self._modus
 				if y == 1 and x in[0, 1, 3, 4, 5] or y == 2 and x < 7:
-					root = [0, 2, 4, 5, 7, 9, 11, 12][x]
-					if y == 1:
-						root = root + 1
-					self._control_surface.show_message("root "+keys[root])
+					if self._quick_scale:
+						key = [0, 2, 4, 5, 7, 9, 11, 12][x]
+						if y == 1:
+							key = key + 1
+						self._quick_keys[key] = not self._quick_keys[key]
+					else:
+						root = [0, 2, 4, 5, 7, 9, 11, 12][x]
+						if y == 1:
+							root = root + 1
+						self._control_surface.show_message("root "+keys[root])
 
 				# if root == selected_key:#alternate minor/major
 				# 	if selected_modus==0:
@@ -419,7 +438,14 @@ class ScaleComponent(ControlSurfaceComponent):
 	
 	
 	def get_pattern(self):
-		notes = self.notes
+		if self._quick_scale:
+			notes = []
+			for n in xrange(12):
+				if self._quick_keys[n]:
+					notes.append(n)
+		else:
+			notes = self.notes
+
 		# origin
 		if not self._is_absolute:
 			origin = 0
