@@ -304,12 +304,14 @@ class CommonModeComponent(ControlSurfaceComponent):
 	
 	@scale_button.pressed
 	def enter_scale(self, button):
+		self._instrument_component._scale_component.set_enabled(True)
 		self._previous_mode = self._instrument_component.get_mode()
 		self._previous_scale_mode = self._instrument_component._scale_component._is_drumrack
 		self._instrument_component.set_mode("scale_mode")
 		
 	@scale_button.released
 	def leave_scale(self, button):
+		self._instrument_component._scale_component.set_enabled(False)
 		if self._previous_scale_mode != self._instrument_component._scale_component._is_drumrack:
 			if self._instrument_component._scale_component._is_drumrack:
 				self._instrument_component.set_mode("drum_mode")
