@@ -563,8 +563,11 @@ class MelodicPattern(object):
 	def note(self, x, y):
 		octave, note = self._octave_and_note(x, y)
 		index = self.base_note + 12 * octave + note 
-	 	root = note == self.scale[0]
-		highlight =  note == self.scale[2] or note == self.scale[4]
+		root = note == self.scale[0]
+		if len(self.scale) < 5:
+			highlight = False
+		else:
+			highlight =  note == self.scale[2] or note == self.scale[4]
 		in_scale = note in self.scale
 		valid = index in self.valid_notes
 		return self.NoteInfo(
