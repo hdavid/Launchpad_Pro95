@@ -217,7 +217,10 @@ class ScaleComponent(ControlSurfaceComponent):
 						elif col==2:
 							button.set_light("Scale.RelativeScale")
 						elif col==6:
-							button.set_light("Scale.CircleOfFifths")
+							if self._quick_scale:
+								button.set_light("DefaultButton.Disabled")
+							else:
+								button.set_light("Scale.CircleOfFifths")
 						elif col==7:
 							if self._quick_scale:
 								button.set_light("Scale.QuickScale.On")
@@ -239,14 +242,17 @@ class ScaleComponent(ControlSurfaceComponent):
 								else:
 									button.set_light("Scale.Key.Off")
 						else:
-							button.set_light("Scale.CircleOfFifths")
+							if self._quick_scale:
+								button.set_light("DefaultButton.Disabled")
+							else:
+								button.set_light("Scale.CircleOfFifths")
 				elif row==3:
 					if self._octave == col:
 						button.set_light("Scale.Octave.On")
 					else:
 						button.set_light("Scale.Octave.Off")
 				elif row==4:
-					if self.is_drumrack:
+					if self.is_drumrack or self._quick_scale:
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if self._modus == col:
@@ -254,7 +260,7 @@ class ScaleComponent(ControlSurfaceComponent):
 						else:
 							button.set_light("Scale.Modus.Off")
 				elif row==5:
-					if self.is_drumrack:
+					if self.is_drumrack or self._quick_scale:
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if self._modus == col+8:
@@ -262,7 +268,7 @@ class ScaleComponent(ControlSurfaceComponent):
 						else:
 							button.set_light("Scale.Modus.Off")
 				elif row==6:
-					if self.is_drumrack:
+					if self.is_drumrack or self._quick_scale:
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if self._modus == col+16:
@@ -270,7 +276,7 @@ class ScaleComponent(ControlSurfaceComponent):
 						else:
 							button.set_light("Scale.Modus.Off")
 				elif row==7:
-					if self.is_drumrack:
+					if self.is_drumrack or self._quick_scale:
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if col+24>len(self._modus_list):
