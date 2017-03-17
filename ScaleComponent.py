@@ -452,6 +452,8 @@ class ScaleComponent(ControlSurfaceComponent):
 			for n in xrange(12):
 				if self._quick_keys[n]:
 					notes.append(n)
+			if len(notes) == 0:
+				notes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 		else:
 			notes = self.notes
 
