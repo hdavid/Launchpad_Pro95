@@ -395,7 +395,10 @@ class ScaleComponent(ControlSurfaceComponent):
 
 			if y == 1 and x == 7 and not self.is_drumrack:
 				self._quick_scale = not self._quick_scale
-				self._control_surface.show_message("Quick scale")
+				if self._quick_scale:
+					self._control_surface.show_message("Quick scale : ON")
+				else:
+					self._control_surface.show_message("Quick scale : OFF")
 			# octave
 			if y == 3:
 				self._octave = x
