@@ -54,6 +54,7 @@ class ScaleComponent(ControlSurfaceComponent):
 		self._octave = 3 
 		self._mode = mode #chromatic, diatonic
 		self._is_drumrack = False
+		self._quick_scale = False
 		self._custom_scale = False
 		self._custom_keys = [True, True, True, True, True, True, True, True, True, True, True, True]
 		self._is_horizontal = True
