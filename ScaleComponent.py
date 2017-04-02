@@ -215,7 +215,10 @@ class ScaleComponent(ControlSurfaceComponent):
 								else:
 									button.set_light("Scale.Key.Off")
 						elif col==2:
-							button.set_light("Scale.RelativeScale")
+							if self._custom_scale:
+								button.set_light("DefaultButton.Disabled")
+							else:
+								button.set_light("Scale.RelativeScale")
 						elif col==6:
 							if self._custom_scale:
 								button.set_light("DefaultButton.Disabled")
