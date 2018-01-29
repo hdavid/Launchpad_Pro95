@@ -8,7 +8,6 @@ from _Framework.Layer import Layer
 from _Framework.ControlSurface import OptimizedControlSurface
 from _Framework.IdentifiableControlSurface import IdentifiableControlSurface
 from _Framework.ModesComponent import ModesComponent, LayerMode, AddLayerMode, ReenterBehaviour
-from _Framework.M4LInterfaceComponent import M4LInterfaceComponent
 from _Framework.InputControlElement import MIDI_NOTE_TYPE, MIDI_CC_TYPE
 from _Framework.ComboElement import ComboElement
 from _Framework.ButtonMatrixElement import ButtonMatrixElement
@@ -18,20 +17,22 @@ from .SpecialMidiMap import SpecialMidiMap, make_button, make_multi_button, make
 from .BackgroundComponent import ModifierBackgroundComponent, BackgroundComponent
 from .ActionsComponent import ActionsComponent
 from .ClipActionsComponent import ClipActionsComponent
+#NEW from .LedLightingComponent import LedLightingComponent
 from .TranslationComponent import TranslationComponent
 from .TargetTrackComponent import TargetTrackComponent
-#from .SpecialDeviceComponent import SpecialDeviceComponent
-#from .DeviceNavigationComponent import DeviceNavigationComponent
+#NEW from .SpecialDeviceComponent import SpecialDeviceComponent
+#NEW from .DeviceNavigationComponent import DeviceNavigationComponent
 from .SpecialSessionRecordingComponent import SpecialSessionRecordingComponent
+from .DrumGroupFinderComponent import DrumGroupFinderComponent
 from .DeviceComponent import DeviceComponent
 from .StepSequencerComponent import StepSequencerComponent
 from .StepSequencerComponent2 import StepSequencerComponent2
 from .DrumGroupComponent import DrumGroupComponent
-from .DrumGroupFinderComponent import DrumGroupFinderComponent
 from .SpecialMixerComponent import SpecialMixerComponent
 from .SpecialSessionComponent import SpecialSessionComponent as SessionComponent, SpecialClipSlotComponent, SpecialSessionZoomingComponent as SessionZoomingComponent, SessionZoomingManagerComponent
 from .SpecialModesComponent import SpecialModesComponent, SpecialReenterBehaviour, CancelingReenterBehaviour
 from .InstrumentComponent import InstrumentComponent
+#NEW from .UserMatrixComponent import UserMatrixComponent
 import consts
 NUM_TRACKS = 8
 NUM_SCENES = 8
@@ -158,13 +159,17 @@ class MidiMap(SpecialMidiMap):
 
 
 class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
+	identity_request = consts.SYSEX_IDENTITY_REQUEST
 
 	def __init__(self, c_instance, *a, **k):
 		product_id_bytes = consts.MANUFACTURER_ID + consts.DEVICE_CODE
 		super(Launchpad_Pro95, self).__init__(c_instance=c_instance, product_id_bytes=product_id_bytes, *a, **k)
-		
-		self.set_enabled(False)
+		#self.set_enabled(False)
 		self._challenge = Live.Application.get_random_int(0, 400000000) & 2139062143
+		live = Live.Application.get_application()
+		self._live_major_version = live.get_major_version()
+		self._live_minor_version = live.get_minor_version()
+		self._live_bugfix_version = live.get_bugfix_version()
 		with self.component_guard():
 			self._skin = make_skin()
 			with inject(skin=const(self._skin)).everywhere():
@@ -184,7 +189,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 				self._create_mixer()
 				self._create_device()
 				self._create_modes()
-				self._create_m4l_interface()
+				#self._create_m4l_interface()
+		
 			self._on_session_record_changed.subject = self.song()
 		# do this in handshake successful. self.set_highlighting_session_component(self._session)
 		self.set_device_component(self._device)
@@ -192,9 +198,9 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._on_session_record_changed()
 
 	def disconnect(self):
-		self.set_highlighting_session_component(None)
+		#self.set_highlighting_session_component(None)
 		self._send_midi(consts.TURN_OFF_LEDS)
-		#self._send_midi(consts.QUIT_MESSAGE)
+		self._send_midi(consts.QUIT_MESSAGE)
 		super(Launchpad_Pro95, self).disconnect()
 
 	def _create_background(self):
@@ -228,16 +234,13 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			)
 		)
 
-
-
-		
 	def _create_session(self):
 		self._session = SessionComponent(
-			NUM_TRACKS, 
-			NUM_SCENES, 
-			auto_name=True, 
-			is_enabled=False, 
-			enable_skinning=True, 
+			NUM_TRACKS,
+			NUM_SCENES,
+			auto_name=True,
+			is_enabled=False,
+			enable_skinning=True,
 			layer=Layer(
 				track_bank_left_button=self._midimap['Arrow_Left_Button'],
 				track_bank_right_button=self._midimap['Arrow_Right_Button'],
@@ -711,7 +714,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			self._mixer, 
 			layer=Layer(arm_buttons=self._midimap['Mixer_Button_Matrix'])
 		)
-		self._modes.add_mode('record_arm_mode', 
+		self._modes.add_mode(
+			'record_arm_mode', 
 			[
 				partial(self._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_layer_mode,
@@ -860,7 +864,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		)
 
 	def _create_m4l_interface(self):
-		self._m4l_interface = M4LInterfaceComponent(controls=self.controls, component_guard=self.component_guard, priority=1)
+		#self._m4l_interface = M4LInterfaceComponent(controls=self.controls, component_guard=self.component_guard, priority=1)
 		self.get_control_names = self._m4l_interface.get_control_names
 		self.get_control = self._m4l_interface.get_control
 		self.grab_control = self._m4l_interface.grab_control
@@ -936,6 +940,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			if slot_index >= 0:
 				clip_slot = track.clip_slots[slot_index]
 				self.song().view.highlighted_clip_slot = clip_slot
+				
 
 	def _set_clip_actions_type(self):
 		self._clip_actions_component.use_selected_track(self._use_sel_track())
@@ -966,6 +971,10 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			for control in self.controls:
 				control.clear_send_cache()
 
+	def _update_hardware(self):
+		self._clear_send_cache()
+		self.update()
+		
 	def _update_global_components(self):
 		self._actions_component.update()
 		self._session_record.update()
@@ -973,6 +982,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def _layout_setup(self, mode, mode_type = consts.SYSEX_PARAM_BYTE_LAYOUT):
 		self._layout_switch(mode, mode_type)
+		
 		self._clear_send_cache()
 		self._update_global_components()
 
@@ -983,22 +993,30 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._last_sent_mode_byte = mode
 
 	def _send_identity_request(self):
-		self._send_midi(consts.SYSEX_IDENTITY_REQUEST)
+		if self._live_major_version >= 10:
+			super(Launchpad_Pro95, self)._send_identity_request()
+		else:
+			self._send_midi(consts.SYSEX_IDENTITY_REQUEST)
 
+	def port_settings_changed(self):
+		self.set_highlighting_session_component(None)
+		super(Launchpad_Pro95, self).port_settings_changed()
+
+        
 	def on_identified(self):
-		self._ok = True
 		self._send_challenge()
 
 	def _send_challenge(self):
 		challenge_bytes = []
 		for index in range(4):
 			challenge_bytes.append(self._challenge >> 8 * index & 127)
+			
 		challenge = consts.CHALLENGE_PREFIX + tuple(challenge_bytes) + (247,)
 		self._send_midi(challenge)
 
 	def _on_handshake_successful(self):
 		self._do_send_midi(consts.LIVE_MODE_SWITCH_REQUEST)
-		self.set_highlighting_session_component(self._session)
+		#self.set_highlighting_session_component(self._session)
 		
 		with self.component_guard():
 			self._modes.set_enabled(True)
@@ -1010,6 +1028,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			self.set_feedback_channels(consts.FEEDBACK_CHANNELS)
 		if self._last_sent_mode_byte is not None:
 			self._layout_setup(self._last_sent_mode_byte)
+		self.set_highlighting_session_component(self._session)
 		self.update()
 
 	def _is_challenge_response(self, midi_bytes):
@@ -1021,11 +1040,19 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		return response == Live.Application.encrypt_challenge2(self._challenge)
 
 	def handle_sysex(self, midi_bytes):
+		if len(midi_bytes) < 7:
+			pass
+		elif self._is_challenge_response(midi_bytes) and self._is_response_valid(midi_bytes):
+			self._on_handshake_successful()
+		elif midi_bytes[6] == consts.SYSEX_STATUS_BYTE_LAYOUT and midi_bytes[7] == consts.NOTE_LAYOUT_SYSEX_BYTE[0]:
+			self._update_hardware()
+		elif midi_bytes[6] in (consts.SYSEX_STATUS_BYTE_MODE, consts.SYSEX_STATUS_BYTE_LAYOUT):
+			pass
 		#if len(midi_bytes) < 7:
 		#	pass
-		if self._is_challenge_response(midi_bytes) and self._is_response_valid(midi_bytes):
-			self._on_handshake_successful()
-			
+		#if self._is_challenge_response(midi_bytes) and self._is_response_valid(midi_bytes):
+		#	self._on_handshake_successful()
+		#	
 		#elif False and midi_bytes[6] in (consts.SYSEX_STATUS_BYTE_MODE, consts.SYSEX_STATUS_BYTE_LAYOUT):
 		#	self.log_message(str(midi_bytes))
 		#	self.log_message(str(midi_bytes[5]))

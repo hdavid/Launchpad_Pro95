@@ -32,7 +32,9 @@ def get_capabilities():
 		),
 		PORTS_KEY: 
 			[
-				inport(props = [NOTES_CC, SCRIPT, REMOTE]), 
-				outport(props = [NOTES_CC, SCRIPT, SYNC, REMOTE])
+				inport(props = [NOTES_CC, SCRIPT, REMOTE]),
+				inport(props=[]),
+				outport(props = [NOTES_CC, SYNC, SCRIPT, REMOTE]),
+				outport(props=[])
 			]
 	}
