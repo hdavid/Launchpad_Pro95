@@ -55,7 +55,8 @@ class ScaleComponent(ControlSurfaceComponent):
 		self._mode = mode #chromatic, diatonic
 		self._is_drumrack = False
 		self._quick_scale = False
-		self._quick_keys = [True, True, True, True, True, True, True, True, True, True, True, True]
+		self._custom_scale = False
+		self._custom_keys = [True, True, True, True, True, True, True, True, True, True, True, True]
 		self._is_horizontal = True
 		self._is_absolute = False
 		self._interval = 3
@@ -204,8 +205,8 @@ class ScaleComponent(ControlSurfaceComponent):
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if col==0 or col==1 or col==3 or col==4 or col==5:
-							if self._quick_scale:
-								if self._quick_keys[self._white_notes_index[col]+1]:
+							if self._custom_scale:
+								if self._custom_keys[self._white_notes_index[col]+1]:
 									button.set_light("Scale.Key.On")
 								else:
 									button.set_light("Scale.Key.Off")
@@ -215,14 +216,17 @@ class ScaleComponent(ControlSurfaceComponent):
 								else:
 									button.set_light("Scale.Key.Off")
 						elif col==2:
-							button.set_light("Scale.RelativeScale")
+							if self._custom_scale:
+								button.set_light("DefaultButton.Disabled")
+							else:
+								button.set_light("Scale.RelativeScale")
 						elif col==6:
-							if self._quick_scale:
+							if self._custom_scale:
 								button.set_light("DefaultButton.Disabled")
 							else:
 								button.set_light("Scale.CircleOfFifths")
 						elif col==7:
-							if self._quick_scale:
+							if self._custom_scale:
 								button.set_light("Scale.QuickScale.On")
 							else:
 								button.set_light("Scale.QuickScale.Off")
@@ -231,8 +235,8 @@ class ScaleComponent(ControlSurfaceComponent):
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if col<7:
-							if self._quick_scale:
-								if self._quick_keys[self._white_notes_index[col]]:
+							if self._custom_scale:
+								if self._custom_keys[self._white_notes_index[col]]:
 									button.set_light("Scale.Key.On")
 								else:
 									button.set_light("Scale.Key.Off")
@@ -242,7 +246,7 @@ class ScaleComponent(ControlSurfaceComponent):
 								else:
 									button.set_light("Scale.Key.Off")
 						else:
-							if self._quick_scale:
+							if self._custom_scale:
 								button.set_light("DefaultButton.Disabled")
 							else:
 								button.set_light("Scale.CircleOfFifths")
@@ -252,7 +256,7 @@ class ScaleComponent(ControlSurfaceComponent):
 					else:
 						button.set_light("Scale.Octave.Off")
 				elif row==4:
-					if self.is_drumrack or self._quick_scale:
+					if self.is_drumrack or self._custom_scale:
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if self._modus == col:
@@ -260,7 +264,7 @@ class ScaleComponent(ControlSurfaceComponent):
 						else:
 							button.set_light("Scale.Modus.Off")
 				elif row==5:
-					if self.is_drumrack or self._quick_scale:
+					if self.is_drumrack or self._custom_scale:
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if self._modus == col+8:
@@ -268,7 +272,7 @@ class ScaleComponent(ControlSurfaceComponent):
 						else:
 							button.set_light("Scale.Modus.Off")
 				elif row==6:
-					if self.is_drumrack or self._quick_scale:
+					if self.is_drumrack or self._custom_scale:
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if self._modus == col+16:
@@ -276,7 +280,7 @@ class ScaleComponent(ControlSurfaceComponent):
 						else:
 							button.set_light("Scale.Modus.Off")
 				elif row==7:
-					if self.is_drumrack or self._quick_scale:
+					if self.is_drumrack or self._custom_scale:
 						button.set_light("DefaultButton.Disabled")
 					else:
 						if col+24>len(self._modus_list):
@@ -346,11 +350,11 @@ class ScaleComponent(ControlSurfaceComponent):
 				selected_key = self._key
 				selected_modus = self._modus
 				if y == 1 and x in[0, 1, 3, 4, 5] or y == 2 and x < 7:
-					if self._quick_scale:
+					if self._custom_scale:
 						key = [0, 2, 4, 5, 7, 9, 11, 12][x]
 						if y == 1:
 							key = key + 1
-						self._quick_keys[key] = not self._quick_keys[key]
+						self._custom_keys[key] = not self._custom_keys[key]
 					else:
 						root = [0, 2, 4, 5, 7, 9, 11, 12][x]
 						if y == 1:
@@ -394,8 +398,8 @@ class ScaleComponent(ControlSurfaceComponent):
 					self.set_key(root)
 
 			if y == 1 and x == 7 and not self.is_drumrack:
-				self._quick_scale = not self._quick_scale
-				if self._quick_scale:
+				self._custom_scale = not self._custom_scale
+				if self._custom_scale:
 					self._control_surface.show_message("Quick scale : ON")
 				else:
 					self._control_surface.show_message("Quick scale : OFF")
@@ -442,15 +446,15 @@ class ScaleComponent(ControlSurfaceComponent):
 		return self._mode == "chromatic_gtr"
 		
 	@property
-	def is_quick_scale(self):
-		return self._quick_scale
+	def is_custom_scale(self):
+		return self._custom_scale
 	
 	
 	def get_pattern(self):
-		if self._quick_scale:
+		if self._custom_scale:
 			notes = []
 			for n in xrange(12):
-				if self._quick_keys[n]:
+				if self._custom_keys[n]:
 					notes.append(n)
 			if len(notes) == 0:
 				notes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
