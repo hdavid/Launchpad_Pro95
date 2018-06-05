@@ -14,6 +14,7 @@ class ActionsComponent(ControlSurfaceComponent):
 	and clip quantization handling.
 	"""
 	undo_button = ButtonControl(**ACTION_BUTTON_COLORS)
+	duplicate_button = ButtonControl(**ACTION_BUTTON_COLORS)
 	redo_button = ButtonControl(color='Misc.Shift', pressed_color='Misc.ShiftOn', disabled_color='DefaultButton.Disabled')
 	tap_button = ButtonControl(color='Misc.Shift', pressed_color='Misc.ShiftOn', disabled_color='DefaultButton.Disabled')
 	quantization_on_button = ToggleButtonControl(untoggled_color='Misc.Shift', toggled_color='Misc.ShiftOn')
@@ -41,6 +42,10 @@ class ActionsComponent(ControlSurfaceComponent):
 	def undo_button(self, button):
 		if self.song().can_undo:
 			self.song().undo()
+
+	@duplicate_button.released
+	def duplicate_button(self, button):
+                self.canonical_parent._copied_slot = None
 
 	@redo_button.pressed
 	def redo_button(self, button):
