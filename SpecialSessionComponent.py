@@ -11,6 +11,20 @@ from _Framework.SceneComponent import SceneComponent
 from _Framework.ClipSlotComponent import ClipSlotComponent
 from .ClipActionsComponent import double_clip, duplicate_clip
 
+from pushbase import special_session_component
+
+def copyclip(source_slot, destination_slot):
+
+    function = special_session_component.ClipSlotCopyHandler()
+    #function._start_copying(self.song().tracks[source_track].clip_slots[source_scene])
+    function._start_copying(source_slot)
+    #function._start_copying(song.tracks[0].clip_slots[0])
+    #destination_track = list(song.tracks).index(destination_slot.canonical_parent)
+    #destination_scene = list(destination_slot.canonical_parent.clip_slots).index(destination_slot)
+    #function._finish_copying(song.tracks[destination_track].clip_slots[destination_scene])
+    function._finish_copying(destination_slot)
+
+
 class SpecialClipSlotComponent(ClipSlotComponent):
 	quantization_component = None
 
@@ -44,7 +58,12 @@ class SpecialClipSlotComponent(ClipSlotComponent):
 			elif self._double_loop_button and self._double_loop_button.is_pressed() and value:
 				self._do_double_loop(self._clip_slot)
 			elif self._duplicate_button and self._duplicate_button.is_pressed() and value:
-				self._do_duplicate_clip()
+                                if self.canonical_parent._copied_slot is None and self._clip_slot.has_clip:
+                                    self.canonical_parent.show_message("clip copied")
+                                    self.canonical_parent._copied_slot = self._clip_slot
+                                elif self.canonical_parent._copied_slot is not None:
+                                    self.canonical_parent.show_message("clip pasted")
+                                    self._do_duplicate_clip()
 			elif self._delete_button and self._delete_button.is_pressed() and value:
 				self._do_delete_clip()
 			elif self._quantize_button and self._quantize_button.is_pressed() and value:
@@ -71,8 +90,8 @@ class SpecialClipSlotComponent(ClipSlotComponent):
 
 	def _do_duplicate_clip(self):
 		if self._clip_slot:
-			duplicate_clip(self.song(), self._clip_slot)
-
+                        copyclip(self.canonical_parent._copied_slot,self._clip_slot)
+                        
 	def _do_track_arm(self):
 		if self._clip_slot:
 			track = self._clip_slot.canonical_parent

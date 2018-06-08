@@ -162,6 +162,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	identity_request = consts.SYSEX_IDENTITY_REQUEST
 
 	def __init__(self, c_instance, *a, **k):
+                self._copied_slot = None
 		product_id_bytes = consts.MANUFACTURER_ID + consts.DEVICE_CODE
 		super(Launchpad_Pro95, self).__init__(c_instance=c_instance, product_id_bytes=product_id_bytes, *a, **k)
 		#self.set_enabled(False)
@@ -230,7 +231,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 				redo_button=self._midimap.with_shift('Undo_Button'),
 				metronome_button=self._midimap['Click_Button'],
 				tap_button=self._midimap.with_shift('Click_Button'),
-				quantization_on_button=self._midimap.with_shift('Quantize_Button')
+				quantization_on_button=self._midimap.with_shift('Quantize_Button'),
+				duplicate_button=self._midimap['Duplicate_Button']
 			)
 		)
 
