@@ -33,7 +33,11 @@ from .SpecialSessionComponent import SpecialSessionComponent as SessionComponent
 from .SpecialModesComponent import SpecialModesComponent, SpecialReenterBehaviour, CancelingReenterBehaviour
 from .InstrumentComponent import InstrumentComponent
 #NEW from .UserMatrixComponent import UserMatrixComponent
-import consts
+from .consts import *
+try:
+    xrange
+except NameError:
+    xrange = range
 NUM_TRACKS = 8
 NUM_SCENES = 8
 
@@ -120,7 +124,7 @@ class MidiMap(SpecialMidiMap):
 			if identifier not in self['Main_Button_Matrix_Ids']:
 				button = make_button('Note_Button_' + str(identifier), 0, identifier, MIDI_NOTE_TYPE)
 				button.set_enabled(False)
-				button.set_channel(consts.CHROM_MAP_CHANNEL)
+				button.set_channel(CHROM_MAP_CHANNEL)
 				note_buttons_raw.append(button)
 		self['Note_Button_Matrix'] = ButtonMatrixElement(rows=[note_buttons_raw], name='Note_Button_Matrix')
 
@@ -159,11 +163,11 @@ class MidiMap(SpecialMidiMap):
 
 
 class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
-	identity_request = consts.SYSEX_IDENTITY_REQUEST
+	identity_request = SYSEX_IDENTITY_REQUEST
 
 	def __init__(self, c_instance, *a, **k):
-                self._copied_slot = None
-		product_id_bytes = consts.MANUFACTURER_ID + consts.DEVICE_CODE
+		self._copied_slot = None
+		product_id_bytes = MANUFACTURER_ID + DEVICE_CODE
 		super(Launchpad_Pro95, self).__init__(c_instance=c_instance, product_id_bytes=product_id_bytes, *a, **k)
 		#self.set_enabled(False)
 		self._challenge = Live.Application.get_random_int(0, 400000000) & 2139062143
@@ -200,8 +204,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 
 	def disconnect(self):
 		#self.set_highlighting_session_component(None)
-		self._send_midi(consts.TURN_OFF_LEDS)
-		self._send_midi(consts.QUIT_MESSAGE)
+		self._send_midi(TURN_OFF_LEDS)
+		self._send_midi(QUIT_MESSAGE)
 		super(Launchpad_Pro95, self).disconnect()
 
 	def _create_background(self):
@@ -313,7 +317,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			self._clip_actions_component,
 			control_surface = self,
 			name='Drum_Group_Control',
-			translation_channel=consts.DR_MAP_CHANNEL
+			translation_channel=DR_MAP_CHANNEL
 		)
 		self._drum_group.set_enabled(True)
 
@@ -451,7 +455,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		 	session_zooming_background_layer_mode])
 		self._modes.add_mode('prioritized_session_zooming_mode',
  			[
-				partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_switch, SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_zooming_manager,
 		 		self._prioritized_session_zooming_button_layer_mode,
 		 		session_zooming_layer_mode,
@@ -464,7 +468,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._modes.add_mode(
 			'session_mode', 
 			[
-				partial(self._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 				self._session_layer_mode, self._session.update_navigation_buttons],
 				behaviour=CancelingReenterBehaviour('session_zooming_mode')
 			)
@@ -473,7 +477,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		#pass
 		#note_mode_matrix_translation = self._create_translation(
 		#	'Note_Mode_Matrix_Translation', 
-		#	consts.CHROM_MAP_CHANNEL, 
+		#	CHROM_MAP_CHANNEL, 
 		#	Layer(
 		#		button_matrix=self._midimap['Main_Button_Matrix'], 
 		#		note_button_matrix=self._midimap['Note_Button_Matrix'], 
@@ -484,8 +488,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		#)
 		# note_mode_scene_launch_translation = self._create_translation(
 		# 	'Note_Mode_Scene_Launch_Translation', 
-		# 	#consts.CHROM_MAP_CHANNEL, 
-		# 	consts.DR_MAP_CHANNEL,
+		# 	#CHROM_MAP_CHANNEL, 
+		# 	DR_MAP_CHANNEL,
 		# 	Layer(
 		# 		scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix']
 		# 	)
@@ -503,7 +507,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		#self._note_modes.add_mode(
 		#	'chromatic_mode', 
 		#	[
-		#		partial(self._layout_setup, consts.NOTE_LAYOUT_SYSEX_BYTE), 
+		#		partial(self._layout_setup, NOTE_LAYOUT_SYSEX_BYTE), 
 		#		self._clip_delete_layer_mode,
 		#		note_mode_matrix_translation
 		#	]
@@ -512,7 +516,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		#self._note_modes.add_mode(
 		#	'audio_mode', 
 		#	[
-		#		partial(self._layout_setup, consts.AUDIO_LAYOUT_SYSEX_BYTE),
+		#		partial(self._layout_setup, AUDIO_LAYOUT_SYSEX_BYTE),
 		#		self._clip_delete_layer_mode
 		#	]
 		#)
@@ -533,7 +537,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		#self._drum_group = DrumGroupComponent(
 		#	self._clip_actions_component, 
 		#	name='Drum_Group_Control'#, 
-		#	#translation_channel=consts.DR_MAP_CHANNEL
+		#	#translation_channel=DR_MAP_CHANNEL
 		#)
 		
 		self._instrument_component._modes.set_enabled(False)
@@ -558,7 +562,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	def _create_device_mode(self):
 		#device_mode_scene_launch_translation = self._create_translation(
 		#	'Device_Mode_Scene_Launch_Translation', 
-		#	consts.DEVICE_MAP_CHANNEL, 
+		#	DEVICE_MAP_CHANNEL, 
 		#	Layer(scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix'])
 		#)
 		device_layer_mode = LayerMode(
@@ -597,9 +601,9 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._modes.add_mode(
 			'device_mode', 
 			[
-				#partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
-				#partial(self._layout_setup, consts.FADER_LAYOUT_SYSEX_BYTE),
-				partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+				#partial(self._layout_switch, SESSION_LAYOUT_SYSEX_BYTE),
+				#partial(self._layout_setup, FADER_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, DRUM_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 			 	self._device,
 			 	device_layer_mode,
 			 	#device_nav_layer_mode,
@@ -619,8 +623,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._user_button_modes.add_mode(
 			'stepsequencer_mode',
 			[
-				partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
-				partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+				partial(self._layout_switch, SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, DRUM_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				LayerMode(
 					self._step_sequencer, 
 					Layer(
@@ -646,8 +650,8 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._user_button_modes.add_mode(
 			'stepsequencer2_mode',
 			[
-				partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
-				partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+				partial(self._layout_switch, SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, DRUM_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				LayerMode(
 					self._step_sequencer2,
 					Layer(
@@ -671,15 +675,15 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		)
 		
 		self._user_button_modes.add_mode('user_mode', [
-			partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
-			partial(self._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE)
+			partial(self._layout_switch, SESSION_LAYOUT_SYSEX_BYTE),
+			partial(self._layout_setup, USER_LAYOUT_SYSEX_BYTE)
 		])
 		self._user_button_modes.selected_mode = "stepsequencer_mode"
 		self._modes.add_mode(
 				'user_mode', 
 				[
-					partial(self._layout_switch, consts.SESSION_LAYOUT_SYSEX_BYTE),
-					partial(self._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+					partial(self._layout_switch, SESSION_LAYOUT_SYSEX_BYTE),
+					partial(self._layout_setup, DRUM_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 					self._enable_user_button_modes,
 					self._user_button_modes
 					
@@ -719,7 +723,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._modes.add_mode(
 			'record_arm_mode', 
 			[
-				partial(self._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_layer_mode,
 		 		arm_layer_mode,
 		 		self._session_zooming_manager,
@@ -734,7 +738,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._modes.add_mode(
 			'track_select_mode',
 			[
-				partial(self._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_layer_mode,
 		 		track_select_layer_mode,
 		 		self._session_zooming_manager,
@@ -749,7 +753,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._modes.add_mode(
 			'mute_mode', 
 			[
-				partial(self._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_layer_mode,
 		 		mute_layer_mode,
 		 		self._session_zooming_manager,
@@ -767,7 +771,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._modes.add_mode(
 			'solo_mode', 
 			[
-				partial(self._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_layer_mode,
 		 		solo_layer_mode,
 		 		self._session_zooming_manager,
@@ -780,14 +784,14 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	def _create_volume_mode(self):
 		volume_mode_scene_launch_translation = self._create_translation(
 			'Volume_Mode_Scene_Launch_Translation', 
-			consts.VOLUME_MAP_CHANNEL, 
+			VOLUME_MAP_CHANNEL, 
 			Layer(scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix'])
 		)
 		volume_layer_mode = LayerMode(self._mixer, layer=Layer(volume_controls=self._midimap['Slider_Button_Matrix']))
 		self._modes.add_mode(
 			'volume_mode',
 			[
-				partial(self._layout_setup, consts.FADER_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, FADER_LAYOUT_SYSEX_BYTE),
 			 	volume_layer_mode,
 			 	self._action_button_background_layer_mode,
 			 	self._session_zooming_manager,
@@ -801,7 +805,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 	def _create_pan_mode(self):
 		pan_mode_scene_launch_translation = self._create_translation(
 			'Pan_Mode_Scene_Launch_Translation', 
-			consts.PAN_MAP_CHANNEL, 
+			PAN_MAP_CHANNEL, 
 			Layer(scene_launch_buttons=self._midimap['Scene_Launch_Button_Matrix'])
 		)
 		pan_layer_mode = LayerMode(
@@ -811,7 +815,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._modes.add_mode(
 			'pan_mode', 
 			[
-				partial(self._layout_setup, consts.FADER_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, FADER_LAYOUT_SYSEX_BYTE),
 		 		pan_layer_mode,
 		 		self._action_button_background_layer_mode,
 		 		self._session_zooming_manager,
@@ -833,7 +837,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._modes.add_mode(
 			'sends_mode', 
 			[
-				partial(self._layout_setup, consts.FADER_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, FADER_LAYOUT_SYSEX_BYTE),
 		 		send_layer_mode,
 		 		self._action_button_background_layer_mode,
 		 		self._session_zooming_manager,
@@ -855,7 +859,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._modes.add_mode(
 			'stop_clip_mode',
 			[
-				partial(self._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
 		 		self._session_layer_mode,
 		 		stop_layer_mode,
 		 		self._session_zooming_manager,
@@ -982,15 +986,15 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		self._session_record.update()
 		self._modifier_background_component.update()
 
-	def _layout_setup(self, mode, mode_type = consts.SYSEX_PARAM_BYTE_LAYOUT):
+	def _layout_setup(self, mode, mode_type = SYSEX_PARAM_BYTE_LAYOUT):
 		self._layout_switch(mode, mode_type)
 		
 		self._clear_send_cache()
 		self._update_global_components()
 
-	def _layout_switch(self, mode, mode_type = consts.SYSEX_PARAM_BYTE_LAYOUT):
-		prefix = consts.SYSEX_STANDARD_PREFIX + mode_type
-		suffix = consts.SYSEX_STANDARD_SUFFIX
+	def _layout_switch(self, mode, mode_type = SYSEX_PARAM_BYTE_LAYOUT):
+		prefix = SYSEX_STANDARD_PREFIX + mode_type
+		suffix = SYSEX_STANDARD_SUFFIX
 		self._send_midi(prefix + mode + suffix)
 		self._last_sent_mode_byte = mode
 
@@ -998,7 +1002,7 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		if self._live_major_version >= 10:
 			super(Launchpad_Pro95, self)._send_identity_request()
 		else:
-			self._send_midi(consts.SYSEX_IDENTITY_REQUEST)
+			self._send_midi(SYSEX_IDENTITY_REQUEST)
 
 	def port_settings_changed(self):
 		self.set_highlighting_session_component(None)
@@ -1013,11 +1017,11 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 		for index in range(4):
 			challenge_bytes.append(self._challenge >> 8 * index & 127)
 			
-		challenge = consts.CHALLENGE_PREFIX + tuple(challenge_bytes) + (247,)
+		challenge = CHALLENGE_PREFIX + tuple(challenge_bytes) + (247,)
 		self._send_midi(challenge)
 
 	def _on_handshake_successful(self):
-		self._do_send_midi(consts.LIVE_MODE_SWITCH_REQUEST)
+		self._do_send_midi(LIVE_MODE_SWITCH_REQUEST)
 		#self.set_highlighting_session_component(self._session)
 		
 		with self.component_guard():
@@ -1027,18 +1031,18 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			self._modifier_background_component.set_enabled(True)
 			self._shifted_background.set_enabled(True)
 			self.release_controlled_track()
-			self.set_feedback_channels(consts.FEEDBACK_CHANNELS)
+			self.set_feedback_channels(FEEDBACK_CHANNELS)
 		if self._last_sent_mode_byte is not None:
 			self._layout_setup(self._last_sent_mode_byte)
 		self.set_highlighting_session_component(self._session)
 		self.update()
 
 	def _is_challenge_response(self, midi_bytes):
-		return len(midi_bytes) == 10 and midi_bytes[:7] == consts.SYSEX_STANDARD_PREFIX + consts.SYSEX_CHALLENGE_RESPONSE_BYTE
+		return len(midi_bytes) == 10 and midi_bytes[:7] == SYSEX_STANDARD_PREFIX + SYSEX_CHALLENGE_RESPONSE_BYTE
 
 	def _is_response_valid(self, midi_bytes):
-		response = long(midi_bytes[7])
-		response += long(midi_bytes[8] << 8)
+		response = int(midi_bytes[7])
+		response += int(midi_bytes[8] << 8)
 		return response == Live.Application.encrypt_challenge2(self._challenge)
 
 	def handle_sysex(self, midi_bytes):
@@ -1046,16 +1050,16 @@ class Launchpad_Pro95(IdentifiableControlSurface, OptimizedControlSurface):
 			pass
 		elif self._is_challenge_response(midi_bytes) and self._is_response_valid(midi_bytes):
 			self._on_handshake_successful()
-		elif midi_bytes[6] == consts.SYSEX_STATUS_BYTE_LAYOUT and midi_bytes[7] == consts.NOTE_LAYOUT_SYSEX_BYTE[0]:
+		elif midi_bytes[6] == SYSEX_STATUS_BYTE_LAYOUT and midi_bytes[7] == NOTE_LAYOUT_SYSEX_BYTE[0]:
 			self._update_hardware()
-		elif midi_bytes[6] in (consts.SYSEX_STATUS_BYTE_MODE, consts.SYSEX_STATUS_BYTE_LAYOUT):
+		elif midi_bytes[6] in (SYSEX_STATUS_BYTE_MODE, SYSEX_STATUS_BYTE_LAYOUT):
 			pass
 		#if len(midi_bytes) < 7:
 		#	pass
 		#if self._is_challenge_response(midi_bytes) and self._is_response_valid(midi_bytes):
 		#	self._on_handshake_successful()
 		#	
-		#elif False and midi_bytes[6] in (consts.SYSEX_STATUS_BYTE_MODE, consts.SYSEX_STATUS_BYTE_LAYOUT):
+		#elif False and midi_bytes[6] in (SYSEX_STATUS_BYTE_MODE, SYSEX_STATUS_BYTE_LAYOUT):
 		#	self.log_message(str(midi_bytes))
 		#	self.log_message(str(midi_bytes[5]))
 		#	pass

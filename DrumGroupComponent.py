@@ -1,4 +1,8 @@
-from itertools import imap
+try:
+    from itertools import imap
+except ImportError:
+    # Python 3...
+    imap=map
 from _Framework.Util import find_if, first, clamp
 from _Framework.Dependency import depends
 from _Framework.SubjectSlot import subject_slot_group, subject_slot

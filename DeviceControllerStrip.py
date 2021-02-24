@@ -2,7 +2,7 @@
 
 from _Framework.ButtonSliderElement import ButtonSliderElement
 from _Framework.InputControlElement import *  # noqa
-from consts import *  # noqa
+from .consts import *  # noqa
 import math
 
 SLIDER_MODE_OFF = 0
@@ -81,7 +81,7 @@ class DeviceControllerStrip(ButtonSliderElement):
 	def _mode(self):
 		if self._parameter_to_map_to != None:	
 			if self._is_quantized:
-			 	if self._range == 1:
+				if self._range == 1:
 					return SLIDER_MODE_TOGGLE
 				elif self._range<=self._num_buttons:
 					return SLIDER_MODE_SMALL_ENUM
@@ -179,7 +179,7 @@ class DeviceControllerStrip(ButtonSliderElement):
 		assert (len(buttons) == len(self._buttons))
 		for index in range(len(self._buttons)):
 			self._buttons[index].set_on_off_values(buttons[index],buttons[index])
-			if buttons[index]>0:
+			if buttons[index].endswith("On"):#buttons[index]>0:
 				self._buttons[index].turn_on()
 			else:
 				self._buttons[index].turn_off()

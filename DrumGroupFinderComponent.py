@@ -1,9 +1,15 @@
 from __future__ import with_statement
-from itertools import imap, chain
+from itertools import chain
 import Live
 from _Framework.Util import find_if
 from _Framework.SubjectSlot import Subject, subject_slot_group, subject_slot
 from _Framework.ControlSurfaceComponent import ControlSurfaceComponent
+try:
+    from itertools import imap
+except ImportError:
+    # Python 3...
+    imap=map
+
 
 class DrumGroupFinderComponent(ControlSurfaceComponent, Subject):
 	"""

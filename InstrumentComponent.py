@@ -3,14 +3,14 @@ from _Framework.SubjectSlot import subject_slot
 from _Framework.ModesComponent import ModesComponent, LayerMode, AddLayerMode, ReenterBehaviour
 from _Framework.Layer import Layer
 from _Framework.Control import PlayableControl, ButtonControl, ToggleButtonControl, control_matrix
-from .consts import ACTION_BUTTON_COLORS
+#from .consts import ACTION_BUTTON_COLORS
 #from .DrumGroupComponent import DrumGroupComponent
 #from .DrumGroupFinderComponent import DrumGroupFinderComponent
 from .ScaleComponent import ScaleComponent
 from .NoteComponent import NoteComponent
 #from .DrumGroupFinderComponent import DrumGroupFinderComponent
 from .TranslationComponent import TranslationComponent
-import consts
+from .consts import *
 from functools import partial
 
 class InstrumentComponent(ControlSurfaceComponent):
@@ -25,8 +25,8 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._implicit_arm = True
 		self._modes = ModesComponent(name = 'Instrument_Modes', is_enabled = False)
 		self._modes.set_enabled = self.set_enabled
-		self._feedback_channels = [consts.DR_MAP_CHANNEL, consts.DR_MAP_CHANNEL + 1, consts.DR_MAP_CHANNEL + 2, consts.DR_MAP_CHANNEL + 3 , consts.DR_MAP_CHANNEL + 4]
-		self._non_feedback_channel = consts.DR_MAP_CHANNEL + 5
+		self._feedback_channels = [DR_MAP_CHANNEL, DR_MAP_CHANNEL + 1, DR_MAP_CHANNEL + 2, DR_MAP_CHANNEL + 3 , DR_MAP_CHANNEL + 4]
+		self._non_feedback_channel = DR_MAP_CHANNEL + 5
 	
 		self._common_component = CommonModeComponent(instrument_component=self, control_surface = self._control_surface)
 		self._scale_component = ScaleComponent(control_surface = self._control_surface, enabled = True)
@@ -79,9 +79,9 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._modes.add_mode(
 			'drum_mode', 
 			[
-				partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
-				partial(self._control_surface._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
-				#partial(self._control_surface._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE),
+				partial(self._control_surface._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._control_surface._layout_setup, USER_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+				#partial(self._control_surface._layout_setup, DRUM_LAYOUT_SYSEX_BYTE),
 				self._control_surface._setup_drum_group(),
 				drum_group_layer_mode,
 				common_layer_mode#,
@@ -98,8 +98,8 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._modes.add_mode(
 			'scale_mode', 
 			[
-				partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
-				partial(self._control_surface._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+				partial(self._control_surface._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._control_surface._layout_setup, USER_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				scale_layer_mode,
 				common_layer_mode#,
 				#drum_mode_note_matrix_translation
@@ -117,8 +117,8 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._modes.add_mode(
 			'note_mode', 
 			[
-				partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
-				partial(self._control_surface._layout_setup, consts.USER_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+				partial(self._control_surface._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._control_surface._layout_setup, USER_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
 				note_layer_mode,
 				common_layer_mode#,
 				#drum_mode_note_matrix_translation
@@ -135,9 +135,9 @@ class InstrumentComponent(ControlSurfaceComponent):
 		self._modes.add_mode(
 			'audio_mode', 
 			[
-				partial(self._control_surface._layout_setup, consts.SESSION_LAYOUT_SYSEX_BYTE),
-				partial(self._control_surface._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE, consts.SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
-				#partial(self._control_surface._layout_setup, consts.DRUM_LAYOUT_SYSEX_BYTE),#consts.AUDIO_LAYOUT_SYSEX_BYTE),
+				partial(self._control_surface._layout_setup, SESSION_LAYOUT_SYSEX_BYTE),
+				partial(self._control_surface._layout_setup, DRUM_LAYOUT_SYSEX_BYTE, SYSEX_PARAM_BYTE_STANDALONE_LAYOUT),
+				#partial(self._control_surface._layout_setup, DRUM_LAYOUT_SYSEX_BYTE),#AUDIO_LAYOUT_SYSEX_BYTE),
 				self._control_surface._clip_delete_layer_mode,
 				common_layer_mode,
 				audio_layer_mode

@@ -15,6 +15,12 @@ SEND_COLORS = (('Sends.A', 'Sends.AAvail'),
  ('Sends.G', 'Sends.GAvail'),
  ('Sends.H', 'Sends.HAvail'))
 
+#fix for python3
+try:
+	xrange
+except NameError:
+	xrange = range
+
 class SpecialRadioButtonGroup(ControlList, RadioButtonControl):
 
 	class State(RadioButtonGroup.State):
@@ -45,57 +51,92 @@ class SpecialMixerComponent(MixerComponent):
 		return SpecialChanStripComponent()
 
 	def set_volume_controls(self, controls):
-		for strip, control in map(None, self._channel_strips, controls or []):
-			if control:
-				control.set_channel(VOLUME_MAP_CHANNEL)
-				control.set_light_and_type('Mixer.Volume', FADER_TYPE_STANDARD)
-			strip.set_volume_control(control)
-
+		#for strip, control in map(None, self._channel_strips, controls or []):
+		i=0
+		for strip in self._channel_strips:
+			if controls!=None and controls[i]:
+				controls[i].set_channel(VOLUME_MAP_CHANNEL)
+				controls[i].set_light_and_type('Mixer.Volume', FADER_TYPE_STANDARD)
+				strip.set_volume_control(controls[i])
+			else:
+				strip.set_volume_control(None)
+			i=i+1
+		
 	def set_pan_controls(self, controls):
-		for strip, control in map(None, self._channel_strips, controls or []):
-			if control:
-				control.set_channel(PAN_MAP_CHANNEL)
-				control.set_light_and_type('Mixer.Pan', FADER_TYPE_BIPOLAR)
-			strip.set_pan_control(control)
+		#for strip, control in map(None, self._channel_strips, controls or []):
+		i=0
+		for strip in self._channel_strips:
+			if controls!=None and controls[i]:
+				controls[i].set_channel(PAN_MAP_CHANNEL)
+				controls[i].set_light_and_type('Mixer.Pan', FADER_TYPE_BIPOLAR)
+				strip.set_pan_control(controls[i])
+			else:
+				strip.set_pan_control(None)
+			i=i+1
 
 	def set_send_controls(self, controls):
 		self._send_controls = controls
-		for strip, control in map(None, self._channel_strips, controls or []):
+		#for strip, control in map(None, self._channel_strips, controls or []):
+		i=0
+		for strip in self._channel_strips:
 			if self.send_index is None or self.send_index not in xrange(8):
 				strip.set_send_controls(None)
 			else:
-				if control:
-					control.set_channel(SENDS_MAP_CHANNEL)
-					control.set_light_and_type(SEND_COLORS[self.send_index][0], FADER_TYPE_STANDARD)
-				strip.set_send_controls((None,) * self._send_index + (control,))
+				if controls!=None and controls[i]:
+					controls[i].set_channel(SENDS_MAP_CHANNEL)
+					controls[i].set_light_and_type(SEND_COLORS[self.send_index][0], FADER_TYPE_STANDARD)
+					strip.set_send_controls((None,) * self._send_index + (controls[i],))
+				else:
+					strip.set_send_controls(None)
+			i=i+1
 
-	def set_arm_buttons(self, buttons):
-		for strip, button in map(None, self._channel_strips, buttons or []):
-			if button:
-				button.reset_state()
-				button.set_on_off_values('Mixer.ArmOn', 'Mixer.ArmOff')
-			strip.set_arm_button(button)
+	def set_arm_buttons(self, buttons):	
+		#for strip in self._channel_strips:#, button in map(None, self._channel_strips, buttons or []):
+		i=0
+		for strip in self._channel_strips:
+			if buttons!=None and buttons[i]:
+				buttons[i].reset_state()
+				buttons[i].set_on_off_values('Mixer.ArmOn', 'Mixer.ArmOff')
+				strip.set_arm_button(buttons[i])
+			else:
+				strip.set_arm_button(None)
+			i=i+1
 
 	def set_solo_buttons(self, buttons):
-		for strip, button in map(None, self._channel_strips, buttons or []):
-			if button:
-				button.reset_state()
-				button.set_on_off_values('Mixer.SoloOn', 'Mixer.SoloOff')
-			strip.set_solo_button(button)
-
+		#for strip, button in map(None, self._channel_strips, buttons or []):
+		i=0
+		for strip in self._channel_strips:
+			if buttons!=None and buttons[i]:
+				buttons[i].reset_state()
+				buttons[i].set_on_off_values('Mixer.SoloOn', 'Mixer.SoloOff')
+				strip.set_solo_button(buttons[i])
+			else:
+				strip.set_solo_button(None)
+			i=i+1
+			
 	def set_mute_buttons(self, buttons):
-		for strip, button in map(None, self._channel_strips, buttons or []):
-			if button:
-				button.reset_state()
-				button.set_on_off_values('Mixer.MuteOff', 'Mixer.MuteOn')
-			strip.set_mute_button(button)
+		#for strip, button in map(None, self._channel_strips, buttons or []):
+		i=0
+		for strip in self._channel_strips:
+			if buttons!=None and buttons[i]:
+				buttons[i].reset_state()
+				buttons[i].set_on_off_values('Mixer.MuteOff', 'Mixer.MuteOn')
+				strip.set_mute_button(buttons[i])
+			else:
+				strip.set_mute_button(None)
+			i=i+1
 
 	def set_track_select_buttons(self, buttons):
-		for strip, button in map(None, self._channel_strips, buttons or []):
-			if button:
-				button.reset_state()
-				button.set_on_off_values('Mixer.Selected', 'Mixer.Unselected')
-			strip.set_select_button(button)
+		#for strip, button in map(None, self._channel_strips, buttons or []):
+		i=0
+		for strip in self._channel_strips:
+			if buttons!=None and buttons[i]:
+				buttons[i].reset_state()
+				buttons[i].set_on_off_values('Mixer.Selected', 'Mixer.Unselected')
+				strip.set_select_button(buttons[i])
+			else:
+				strip.set_select_button(None)
+			i=i+1
 
 	@send_select_buttons.checked
 	def send_select_buttons(self, button):

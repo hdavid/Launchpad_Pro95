@@ -13,6 +13,11 @@ from .ClipActionsComponent import double_clip, duplicate_clip
 
 from pushbase import special_session_component
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
 def copyclip(source_slot, destination_slot):
 
     function = special_session_component.ClipSlotCopyHandler()

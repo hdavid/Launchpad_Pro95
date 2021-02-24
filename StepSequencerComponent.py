@@ -1,15 +1,19 @@
 import Live
-from consts import * 
+from .consts import * 
 from _Framework.ControlSurfaceComponent import ControlSurfaceComponent
 from _Framework.CompoundComponent import CompoundComponent
 from _Framework.ButtonElement import ButtonElement
 from _Framework.Util import find_if
-from itertools import imap
-from NoteEditorComponent import NoteEditorComponent
-from ScaleComponent import * 
-from TrackControllerComponent import TrackControllerComponent
+try:
+    from itertools import imap
+except ImportError:
+    # Python 3...
+    imap=map
+from .NoteEditorComponent import NoteEditorComponent
+from .ScaleComponent import * 
+from .TrackControllerComponent import TrackControllerComponent
 import time
-import Settings
+from .Settings import *
 
 # quantization button colours. this must remain of length 4.
 QUANTIZATION_MAP = [1, 0.5, 0.25, 0.125]  # 1/4 1/8 1/16 1/32
@@ -593,7 +597,7 @@ class LoopSelectorComponent(ControlSurfaceComponent):
 						self._cache[i] = button._off_value
 				else:
 					in_loop = (i * self._blocksize * self._quantization < self._loop_end) and (i * self._blocksize * self._quantization >= self._loop_start)
-					playing = self._playhead >= i * self._blocksize * self._quantization and self._playhead < (i + 1) * self._blocksize * self._quantization
+					playing = self._playhead != None and self._playhead >= i * self._blocksize * self._quantization and self._playhead < (i + 1) * self._blocksize * self._quantization
 					selected = i == self.block
 					if in_loop:
 						if playing:
@@ -958,7 +962,7 @@ class StepSequencerComponent(CompoundComponent):
 			#	self._note_selector.set_selected_note(self.index_of(self._drum_group_device.drum_pads,self._drum_group_device.view.selected_drum_pad))
 
 			#load scale settings from clip
-			if Settings.STEPSEQ__SAVE_SCALE != None and Settings.STEPSEQ__SAVE_SCALE == "clip":  
+			if STEPSEQ__SAVE_SCALE != None and STEPSEQ__SAVE_SCALE == "clip":  
 				self._scale_component.from_object(self._clip)
 				self._note_selector.set_scale(self._scale_component.notes, self._scale_component._selected_key)
 				self._note_selector.set_selected_note(self._scale_component._octave_index * 12 + self._scale_component._selected_key)
@@ -1202,7 +1206,7 @@ class StepSequencerComponent(CompoundComponent):
 						self._clip.remove_loop_end_listener(self._on_loop_changed)
 				
 				#load scale settings from clip
-				if Settings.STEPSEQ__SAVE_SCALE != None and Settings.STEPSEQ__SAVE_SCALE == "clip":  
+				if STEPSEQ__SAVE_SCALE != None and STEPSEQ__SAVE_SCALE == "clip":  
 					self._scale_component.from_object(self._clip_slot.clip)
 					#must set clip to None otherwise it trigger a clip note update which we dont want.
 					self._clip = None
@@ -1363,7 +1367,7 @@ class StepSequencerComponent(CompoundComponent):
 				self._note_selector.set_selected_note(self._scale_component._octave * 12 + self._scale_component._key)
 				self._scale_updated()
 				#update clip name
-				if Settings.STEPSEQ__SAVE_SCALE != None and Settings.STEPSEQ__SAVE_SCALE == "clip":  
+				if STEPSEQ__SAVE_SCALE != None and STEPSEQ__SAVE_SCALE == "clip":  
 					self._scale_component.update_object_name(self._clip)
 			self.set_mode(self._mode_backup, self._number_of_lines_per_note)
 

@@ -1,5 +1,5 @@
 from _Framework.Capabilities import CONTROLLER_ID_KEY, PORTS_KEY, NOTES_CC, SCRIPT, SYNC, REMOTE, controller_id, inport, outport
-from Launchpad_Pro95 import Launchpad_Pro95
+from .Launchpad_Pro95 import *
 
 def create_instance(c_instance):
 	""" Creates and returns the Launchpad script """

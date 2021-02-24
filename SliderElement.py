@@ -1,21 +1,21 @@
 #Embedded file name: /Users/versonator/Jenkins/live/output/mac_64_static/Release/midi-remote-scripts/Launchpad_Pro/SliderElement.py
 from _Framework.SliderElement import SliderElement as SliderElementBase
 from _Framework.Skin import Skin, SkinColorMissingError
-import consts
-FADER_TYPES = (consts.FADER_TYPE_STANDARD, consts.FADER_TYPE_BIPOLAR)
+from .consts import *
+FADER_TYPES = (FADER_TYPE_STANDARD, FADER_TYPE_BIPOLAR)
 
 class SliderElement(SliderElementBase):
 
 	def __init__(self, msg_type, channel, identifier, skin = Skin(), *a, **k):
 		self._skin = skin
 		self._header = None
-		self._type = consts.FADER_TYPE_STANDARD
+		self._type = FADER_TYPE_STANDARD
 		self._color = 0
 		super(SliderElement, self).__init__(msg_type, channel, identifier, *a, **k)
 		self.set_needs_takeover(False)
 
 	def set_index(self, index):
-		self._header = consts.SYSEX_STANDARD_PREFIX + consts.SYSEX_PARAM_BYTE_FADER_SETUP + (index,)
+		self._header = SYSEX_STANDARD_PREFIX + SYSEX_PARAM_BYTE_FADER_SETUP + (index,)
 
 	def set_light_and_type(self, light_value, type_value):
 		assert(type_value in FADER_TYPES)
@@ -44,7 +44,7 @@ class SliderElement(SliderElementBase):
 			else:
 				value = 0
 				color_value = 0
-			msg = self._header + (self._type, color_value, value) + consts.SYSEX_STANDARD_SUFFIX
+			msg = self._header + (self._type, color_value, value) + SYSEX_STANDARD_SUFFIX
 			self._send_midi(msg)
 
 	def update(self):
