@@ -374,11 +374,11 @@ class NoteSelectorComponent(ControlSurfaceComponent):
 
 	def set_selected_note(self, selected_note):
 		if self.is_drumrack:
-			self._root_note = ((selected_note + 12) / 16 - 1) * 16 + 4
+			self._root_note = int((selected_note + 12) / 16 - 1) * 16 + 4
 			self._offset = (selected_note - self._root_note + 16) % 16
 			# self._control_surface.log_message("DR selected_note:"+str(selected_note)+" self._root_note: "+ str(self._root_note)+" offset: "+ str(self._offset))
 		else:
-			self._root_note = ((selected_note - self._key) / 12) * 12 + self._key
+			self._root_note = int((selected_note - self._key) / 12) * 12 + self._key
 			self._offset = (selected_note + 12 - self._root_note) % 12
 			# self._control_surface.log_message("CHR selected_note:"+str(selected_note)+" self._root_note: "+ str(self._root_note)+" offset: "+ str(self._offset))
 
@@ -1357,7 +1357,7 @@ class StepSequencerComponent(CompoundComponent):
 		if (value is not 0):
 			self._mode_backup = self._mode
 			if self._scale_component != None and self._note_selector != None:
-				self._scale_component.set_octave(self._note_selector._root_note / 12)
+				self._scale_component.set_octave(int(self._note_selector._root_note / 12))
 				self._scale_component.set_key(self._note_selector._key)
 				self.set_mode(STEPSEQ_MODE_SCALE_EDIT)
 		else:
