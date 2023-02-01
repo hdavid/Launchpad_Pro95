@@ -221,7 +221,7 @@ class MelodicNoteEditorComponent(ControlSurfaceComponent):
 					if self._notes_pitches[x * 7 + note_index] == 1:
 						time = x * self._quantization
 						velocity = self._velocity_map[self._notes_velocities[x]]
-						length = self._length_map[self._notes_lengths[x]] * self._quantization / 4.0
+						length = self._length_map[self._notes_lengths[x]] * int(self._quantization / 4.0)
 						pitch = self._key_indexes[note_index] + 12 * (self._notes_octaves[x] - 2)
 						if(pitch >= 0 and pitch < 128 and velocity >= 0 and velocity < 128 and length >= 0):
 							note_cache.append([pitch, time, length, velocity, False])
