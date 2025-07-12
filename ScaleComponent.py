@@ -577,6 +577,9 @@ class MelodicPattern(object):
 		if self.chromatic_gtr_mode and y > 3:
 			index = index - 1
 		octave = int(index / scale_size)
+		if index < 0:
+			# Lower the octave by 1 if this pad represents a note below the bottom root
+			octave -= 1
 		note = scale[index % scale_size]
 		return (octave, note)
 
